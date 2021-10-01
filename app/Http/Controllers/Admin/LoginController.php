@@ -15,7 +15,7 @@ class LoginController extends Controller
     }
     public function index()
     {
-        return view('admin.login');
+        return view('admin.AdminLoginView');
     }
 
     public function login(Request $request)
@@ -37,7 +37,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-      $route = "admin.login";
+      $route = "admin.login.get";
       Auth::guard('admin')->logout();
       return redirect()->route($route)->with("message","logout successfully");
     }
