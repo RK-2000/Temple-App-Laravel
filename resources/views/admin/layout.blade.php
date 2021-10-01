@@ -15,8 +15,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href=" {{ URL::to('/assets/css/style.css') }} ">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"/>    
-    
+    @yield('custom_scripts')    
     <link rel="shortcut icon" href="{{ URL::to('/assets/images/favicon.ico')}}" />
     <style>
       #logo{
@@ -72,9 +71,13 @@
                 </div>
               </a>
             </li>
-            {{ $data = getMenuList() }}
-            {{ dd($data['groups']); }}
-              @foreach($groups as $group)
+      <?php
+      $data = array();
+      $data = getMenuList(); 
+      $MenuList = $data["MenuList"];
+      $groups = $data["groups"];
+      ?>
+                @foreach($groups as $group)
               <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#{{$group->page_name}}-collapse" aria-expanded="false" aria-controls="gallery-collapse">
                   <span class="menu-title">{{$group->page_label}}</span>

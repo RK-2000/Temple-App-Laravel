@@ -32,7 +32,7 @@ Route::prefix('admin')->group(function(){
         Route::get('/manage-event',[App\Http\Controllers\Admin\EventController::class,'event'])->name('event');
         
         //Roles
-        Route::get('/roles',[App\Http\Controllers\Admin\RoleController::class,'role'])->name('roles');
+        Route::get('/roles',[App\Http\Controllers\Admin\RoleController::class,'role'])->name('manage_role');
         Route::post('/roles',[App\Http\Controllers\Admin\RoleController::class,'addRole'])->name('admin.addRole.post');
 
         //Prasad

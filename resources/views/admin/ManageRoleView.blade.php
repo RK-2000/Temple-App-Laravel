@@ -1,4 +1,11 @@
 @extends('admin/layout')
+@section('custom_scripts')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+@endsection
 @section('content')
     
 
@@ -66,12 +73,38 @@
           </span>
         </div>  
     <div class="row">
-      <div class="col-md-12 grid-margin stretch-card">
-    
+      <div class="col-md-12">
+        <table id="table_id" class="table table-bordered">
+          <thead>
+              <tr>
+                  <th id="id">ID</th>
+                  <th id = "role-name">Role Name</th>
+                  <th id = "status">Status</th>
+                  <th id = "created_data_time">Created At</th>
+                  <th id = "operations">Operations</th>
+              </tr>
+          </thead>
+          
+        </table>
       </div>      
     </div>
+     <!--for buttons  -->
+    
+     <!-- end button -->
   </div>
   <!-- content-wrapper ends -->
 </div>
-
+<script>
+  $(document).ready( function () {
+    $('#table_id').DataTable({
+        "serverSide": true,
+        "processing": true,
+        "ajax": {
+            url: "{{route('manage_role');}}",
+            type: "GET",
+            data: "{{route('manage_role');}}"
+        }
+    });
+} );
+</script>
 @endsection

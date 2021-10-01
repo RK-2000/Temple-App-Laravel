@@ -17,7 +17,6 @@ function getMenuList()
         'MenuList'=>$MenuList,
         'groups'=>$groups
     );
-    
     return $data;
 
 }
