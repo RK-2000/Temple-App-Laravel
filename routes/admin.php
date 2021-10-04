@@ -34,6 +34,8 @@ Route::prefix('admin')->group(function(){
         //Roles
         Route::get('/roles',[App\Http\Controllers\Admin\RoleController::class,'role'])->name('manage_role');
         Route::post('/roles',[App\Http\Controllers\Admin\RoleController::class,'addRole'])->name('admin.addRole.post');
+        Route::get('/add-role',[App\Http\Controllers\Admin\RoleController::class,'addRole2'])->name('add_role');
+
 
         //Prasad
         Route::get('/manage-prasad',[App\Http\Controllers\Admin\PrasadController::class,'index'])->name('prshad_type');

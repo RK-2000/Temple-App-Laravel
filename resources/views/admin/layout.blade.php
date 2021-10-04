@@ -97,86 +97,20 @@
                 </div>
               </li>
               @endforeach
-               
-            {{-- <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#users-collapse" aria-expanded="false" aria-controls="users-collapse">
-                <span class="menu-title">Roles and Permissions</span>
-                <i class="mdi mdi-account menu-icon"></i>
-              </a>
-              <div class="collapse" id="users-collapse">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.addRole')}}">Manage Roles</i></a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Manage Permissions</i></a></li>
-                </ul>
-              </div>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#admin-collapse" aria-expanded="false" aria-controls="admin-collapse">
-                <span class="menu-title">Master</span>
-                <i class="mdi mdi-home menu-icon"></i>
-              </a>
-              <div class="collapse" id="admin-collapse">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.prasad'); }}">Manage Prasad</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.event.type'); }}">Manage Event Types</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{ route('admin.event'); }}">Manage Event</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Manage Donation</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Order Status</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#users-collapse" aria-expanded="false" aria-controls="users-collapse">
-                <span class="menu-title">Users</span>
-                <i class="mdi mdi-account menu-icon"></i>
-              </a>
-              <div class="collapse" id="users-collapse">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="#">Add Users</i></a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Manage Users</i></a></li>
-                </ul>
-              </div>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#gallery-collapse" aria-expanded="false" aria-controls="gallery-collapse">
-                <span class="menu-title">Gallery</span>
-                <i class="mdi mdi-camera-burst menu-icon"></i>
-              </a>
-              <div class="collapse" id="gallery-collapse">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="#">Image Gallery</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Video Gallery</a></li>
-                  
-                </ul>
-              </div>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span class="menu-title">Settings</span>
-                <i class="mdi mdi-settings menu-icon"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span class="menu-title">Reports</span>
-                <i class="mdi mdi-file-document menu-icon"></i>
-              </a>
-            </li> --}}
           </ul>
         </nav>
-        
+        @yield('content')
+
         {{-- Show data in mavigation --}}
                         
         {{-- End navigation data --}}
         {{-- Forms --}}
-        @yield('content')
+        
         {{-- end Form --}}
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="{{URL::to('/assets/vendors/js/vendor.bundle.base.js')}}"></script>

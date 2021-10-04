@@ -88,11 +88,7 @@
         </table>
       </div>      
     </div>
-     <!--for buttons  -->
-    
-     <!-- end button -->
   </div>
-  <!-- content-wrapper ends -->
 </div>
 <script>
   $(document).ready( function () {

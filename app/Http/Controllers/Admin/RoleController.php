@@ -105,4 +105,32 @@ class RoleController extends Controller
         }
 
     }
+
+    public function addRole2(){
+        return view('admin/addRole');
+    }
+
+    public function addRole2Post(Request $request){
+        date_default_timezone_set("Asia/Calcutta");
+        
+        $role = new Roles;
+        $role->name = $request->input('role-name');
+        $role->group_id = "";
+        $role->page_id = "";
+        $role->status = (int)($request->input('role-status'));
+        $role->is_show_to_user = 1;
+        $role->created_date_time = date('Y-m-d H:i:s');
+        
+
+        if($role->save())
+        {
+            return redirect()->route('manage_role');
+        }
+        else{
+            dd($role);
+        }
+
+    }
+
+
 }
