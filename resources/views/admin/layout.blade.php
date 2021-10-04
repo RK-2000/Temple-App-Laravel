@@ -43,7 +43,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link Route::get('/dashboard',[App\Http\Controllers\admin\AdminDashboardController::class,'index'])->name('admin.dashboard');dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">David Greymaax</p>
+                  <p class="mb-1 text-black">{{Auth::user()->email}}</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -66,7 +66,7 @@
               <a href="#" class="nav-link">
                 
                 <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2">Ritikshri19@gmail.com</span>
+                  <span class="font-weight-bold mb-2">{{ Auth::user()->email }}</span>
                   <span class="text-secondary text-small">Admin</span>
                 </div>
               </a>

@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Roles;
 class RoleController extends Controller
 {
-    public function role(Request $request){
+
+
+    public function manageRole(Request $request){
         
     
         if($request->ajax())
         {
-            
+               
             $start = $request->start;
             $length = $request->length;
             $column = $request->order[0]['column'];
@@ -41,6 +43,7 @@ class RoleController extends Controller
              $rolesCount = $role->count();
              $roles = $role->offset($start)->limit($length)->get();  
              $filteredValue = 0;
+             
             foreach($roles as $key => $value){
                 if($value->is_show_to_user == 0 or $value->status == 2){
                     $start--;
@@ -65,7 +68,7 @@ class RoleController extends Controller
                                     </span>
                                     </button>
                                     <ul class="dropdown-menu text-center">
-                                    <li><a href="#" >Edit</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/update-role?id='.$value->id.'">Edit</a></li>
                                     <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
@@ -73,7 +76,7 @@ class RoleController extends Controller
             }
             $json_data = array(
                 "recordsTotal"    => $rolesCount,
-                "recordsFiltered" => $filteredValue,
+                "recordsFiltered" => $rolesCount,
                 "data"            => $data
             );
             echo json_encode($json_data);
@@ -84,44 +87,38 @@ class RoleController extends Controller
         return view('admin/ManageRoleView');
     }
 
-    public function addRole(Request $request){
-        date_default_timezone_set("Asia/Calcutta");
-        
-        $role = new Roles;
-        $role->name = $request->input('role-name');
-        $role->group_id = "";
-        $role->page_id = "";
-        $role->status = (int)($request->input('role-status'));
-        $role->is_show_to_user = 1;
-        $role->created_date_time = date('Y-m-d H:i:s');
-        
-
-        if($role->save())
-        {
-            return redirect()->route('manage_role');
-        }
-        else{
-            dd($role);
-        }
-
-    }
-
-    public function addRole2(){
+    public function addRole(){
         return view('admin/addRole');
     }
 
-    public function addRole2Post(Request $request){
+    public function addRoleData(Request $request){
+        
         date_default_timezone_set("Asia/Calcutta");
         
+        
+
+        $groups = "";
+        if(!empty($request->input('groups'))){
+            foreach($request->input('groups') as $group){
+                $groups .= $group.",";  
+            }
+        }
+        
+
+        $pages = "";
+        if(!empty($request->input('pages'))){
+            foreach($request->input('pages') as $list){
+                $pages .= $list.",";  
+            }
+        }
+    
         $role = new Roles;
         $role->name = $request->input('role-name');
-        $role->group_id = "";
-        $role->page_id = "";
+        $role->group_id = $groups;
+        $role->page_id = $pages;
         $role->status = (int)($request->input('role-status'));
         $role->is_show_to_user = 1;
         $role->created_date_time = date('Y-m-d H:i:s');
-        
-
         if($role->save())
         {
             return redirect()->route('manage_role');
@@ -132,5 +129,58 @@ class RoleController extends Controller
 
     }
 
+    public function UpdateRole(Request $req){
+        $role = Roles::where('id',$req->id)->first();
+        if(!$role){
+            dd("Invalid User Id");   
+        }
+        $page_ids = explode(",",$role->page_id);
+        $group_ids = explode(",",$role->group_id);
+        if(!empty($page_ids)){
+            array_pop($page_ids);
+        }
+        if(!empty($group_ids)){
+            array_pop($group_ids);
+        }
+        $name = $role->name;
+        $status = $role->status;
+        $id = $role->id;
+        return view('admin/UpdateRole')->with(compact('page_ids','group_ids','name','status','id'));
+    }
+
+    public function UpdateRoleData(Request $request){
+        $id = (int)$request->role_id;
+        $role = Roles::where('id','=',$id)->first();
+        
+
+        $groups = "";
+        if(!empty($request->input('groups'))){
+            foreach($request->input('groups') as $group){
+                $groups .= $group.",";  
+            }
+        }
+        
+
+        $pages = "";
+        if(!empty($request->input('pages'))){
+            foreach($request->input('pages') as $list){
+                $pages .= $list.",";  
+            }
+        }
+        $role->name = $request->input('role-name');
+        $role->group_id = $groups;
+        $role->page_id = $pages;
+        $role->status = (int)($request->input('role-status'));
+        $role->is_show_to_user = 1;
+        $role->updated_date_time = date('Y-m-d H:i:s');
+        if($role->save())
+        {
+            return redirect()->route('manage_role');
+        }
+        else{
+            dd($role);
+        }
+
+    }
 
 }
