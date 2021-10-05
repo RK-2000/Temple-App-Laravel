@@ -5,6 +5,9 @@
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
 @endsection
 @section('content')
     
@@ -50,8 +53,26 @@
         </table>
       </div>      
     </div>
-    </div
+  </div
 </div>
+@if($errors->any())
+      <script type="text/javascript">
+          var error = "{{$errors->first()}}";
+          toastr.error(error);
+      </script>
+  @endif
+  @if(session()->has('message'))
+      <script type="text/javascript">
+          var message = "{{session()->get('message')}}";
+          toastr.success(message);
+      </script>
+  @endif
+  @if (session()->has('error'))
+      <script type="text/javascript">
+          var error = "{{session()->get('error')}}";
+          toastr.error(error);
+      </script>
+  @endif
 <script>
   $(document).ready( function () {
     $('#table_id').DataTable({
