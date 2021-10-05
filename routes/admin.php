@@ -24,10 +24,13 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
         //User
-        Route::get('/add-user', [App\Http\Controllers\Admin\AdminUserController::class, 'addUser'])->name('add_user');
 
-        // Route::get('/user-list',[App\Http\Controllers\Admin\AdminUserController::class,'addUserData'])->name('   users_list');
-        Route::get('/user-list', [App\Http\Controllers\Admin\AdminUserController::class, 'UserData'])->name('users_list');
+        Route::get('/add-user',[App\Http\Controllers\Admin\AdminUserController::class,'addUser'])->name('add_user');
+        Route::get('/edit-user',[App\Http\Controllers\Admin\AdminUserController::class,'EditUser'])->name('edit_user');
+        Route::get('/user-list',[App\Http\Controllers\Admin\AdminUserController::class,'UserData'])->name('users_list');
+        Route::post('/edit-data',[App\Http\Controllers\Admin\AdminUserController::class,'EditData'])->name('admin.edit_data');
+        Route::post('/add-user-data',[App\Http\Controllers\Admin\AdminUserController::class,'addUserData'])->name('addUserData');
+
 
         //Event
         Route::get('/event-type', [App\Http\Controllers\Admin\EventController::class, 'eventType'])->name('event_type');
