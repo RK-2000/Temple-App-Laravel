@@ -21,7 +21,7 @@ class RoleController extends Controller
             $asc = $request->order[0]['dir'];
             $search = $request->search['value'];
 
-            $role = DB::table('tbl_master_roles');
+            $role = Roles::where('status','!=',2);
             $data = array();
             
             if(!empty($search)){
@@ -68,7 +68,7 @@ class RoleController extends Controller
                                     </button>
                                     <ul class="dropdown-menu text-center">
                                     <li><a href="http://127.0.0.1:8000/admin/update-role?id='.$value->id.'">Edit</a></li>
-                                    <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/delete-role?id='.$value->id.'" data-delete-link="" class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
                 $data[] = $nestedValue;
@@ -180,6 +180,13 @@ class RoleController extends Controller
             dd($role);
         }
 
+    }
+
+    public function DeleteRoleData(Request $req){
+        $role = Roles::where('id',$req->id)->get()->first();
+        $role->status = 2;
+        $role->save();
+        return redirect()->route('manage_role');
     }
 
 }
