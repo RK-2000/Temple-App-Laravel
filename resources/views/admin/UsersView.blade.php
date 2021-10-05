@@ -43,7 +43,7 @@
                 <th id="id">ID</th>
                 <th id = "email">Email</th>
                 <th id = "status">Status</th>
-                <th id = "created_at">Created At</th>
+                {{-- <th id = "created_at">Created At</th> --}}
                 <th id='operation'>Operations</th>
             </tr>
           </thead>
