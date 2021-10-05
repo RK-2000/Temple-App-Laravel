@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
-{   
+{
     protected $table = "tbl_admin_users";
     protected $primaryKey = 'admin_users_id';
     public $timestamps = false;
@@ -23,8 +23,6 @@ class Admin extends Authenticatable
         $data  = DB::select('select * from tbl_admin_users where  admin_users_id = ?', [$id]);
         return $data;
     }
-    public static function EditData($data){
-        $f = DB::table('tbl_admin_users')->where('admin_users_id',$data->id)->update(['user_name'=>$data->user_name,'email'=>$data->email,'mobile'=>$data->mobile,'status'=>$data->status,'update_date_time'=>$data->update_date_time]);
-    }
+    
 
 }

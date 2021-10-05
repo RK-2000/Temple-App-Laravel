@@ -24,12 +24,11 @@ class AdminUserController extends Controller
             'email' => 'required|email|unique:tbl_admin_users',
             'mobile' => 'required',
             'password' => 'required',
-            // 'role_id' => 'required',
             'status' => 'required'
         ]);
         if ($validator->fails()) {
             dd('Validation Fail');
-       }else{
+       } else {
             $current_date_time = date('Y-m-d H:i:s');
             $admin->role_id=$request->role_id;
             $admin->user_name=$request->user_name;
@@ -94,7 +93,6 @@ class AdminUserController extends Controller
                 else{
                     $nestedValue[2] = "Inactive";
                 }       
-                // $nestedValue[3] = $value->created_date_time;
                 $nestedValue[3] = '<div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                     Action
@@ -131,30 +129,28 @@ class AdminUserController extends Controller
         return view('admin/EditUserView',['data'=>$data,'roles' => $roles]);
     }
     public function EditData(Request $data){
-
-        $admin = new Admin; 
+        // dd($data);
+        
         $validator = Validator::make($data->all(), [
-            'user_name' => 'required|max:100',
-            'email' => 'required',
+            'admin_users_id' => 'required',
+            'user_name' => 'required|max:100', 
+            'email' => 'required|email|unique:tbl_admin_users,email,'.$data->admin_users_id.',admin_users_id',
             'mobile' => 'required',
             'status' => 'required'
         ]);
         if($validator->fails()) {
                 dd('Validation Fail');
         }else{
+            $admin = Admin::where('admin_users_id',$data->admin_users_id)->first(); 
             $update_date_time = date('Y-m-d H:i:s');
             $admin->role_id=$data->role_id;
             $admin->user_name=$data->user_name;
             $admin->email=$data->email;
             $admin->mobile=$data->mobile;
             $admin->status=$data->status;
-            $admin->id=$data->id;
-            $data = Admin::EditData($admin);
-            if($data){
-                dd('success');
-            }else{
-                dd('fail');
-            }
+            $admin->update_date_time = $update_date_time;
+            $admin->save();
+            return redirect()->route('add_user');
            
        }
 

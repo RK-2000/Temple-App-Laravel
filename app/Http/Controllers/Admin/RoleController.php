@@ -6,59 +6,54 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Roles;
+
 class RoleController extends Controller
 {
 
-
-    public function manageRole(Request $request){
-        
-    
-        if($request->ajax())
-        {
+    // To view a role
+    public function manageRole(Request $request)
+    {
+        if ($request->ajax()) {
             $start = $request->start;
             $length = $request->length;
             $column = $request->order[0]['column'];
             $asc = $request->order[0]['dir'];
             $search = $request->search['value'];
-
-            $role = Roles::where('status','!=',2);
+            $role = Roles::where('status', '!=', 2);
             $data = array();
-            
-            if(!empty($search)){
-                $where = "( name LIKE '%".$search."%' )";
+
+            if (!empty($search)) {
+                $where = "( name LIKE '%" . $search . "%' )";
                 $role->whereRaw($where);
             }
 
             if ($column == 1) {
-                $role->orderBy('id',$asc);
-             } elseif($column == 2) {
-                $role->orderBy('name',$asc);
-             } elseif($column == 3) {
-                $role->orderBy('status',$asc);
-             } elseif($column == 4) {
-                 $role->orderBy('created_date_time',$asc);
-             } 
-
-             $rolesCount = $role->count();
-             $roles = $role->offset($start)->limit($length)->get();  
-             $filteredValue = 0;
-             
-            foreach($roles as $key => $value){
-                if($value->is_show_to_user == 0 or $value->status == 2){
+                $role->orderBy('id', $asc);
+            } elseif ($column == 2) {
+                $role->orderBy('name', $asc);
+            } elseif ($column == 3) {
+                $role->orderBy('status', $asc);
+            } elseif ($column == 4) {
+                $role->orderBy('created_date_time', $asc);
+            }
+            $rolesCount = $role->count();
+            $roles = $role->offset($start)->limit($length)->get();
+            $filteredValue = 0;
+            foreach ($roles as $key => $value) {
+                if ($value->is_show_to_user == 0 or $value->status == 2) {
                     $start--;
                     $rolesCount--;
                     continue;
                 }
-                $filteredValue ++;
+                $filteredValue++;
                 $nestedValue = array();
-                $nestedValue[0] = $start+$key+1; 
+                $nestedValue[0] = $start + $key + 1;
                 $nestedValue[1] = $value->name;
-                if($value->status == 1){
+                if ($value->status == 1) {
                     $nestedValue[2] = 'Active';
-                }
-                else{
+                } else {
                     $nestedValue[2] = "Inactive";
-                }       
+                }
                 $nestedValue[3] = $value->created_date_time;
                 $nestedValue[4] = '<div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
@@ -67,9 +62,9 @@ class RoleController extends Controller
                                     </span>
                                     </button>
                                     <ul class="dropdown-menu text-center">
-                                    <li><a href="http://127.0.0.1:8000/admin/update-role?id='.$value->id.'">Edit</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/update-role?id=' . $value->id . '">Edit</a></li>
 
-                                    <li><a href="http://127.0.0.1:8000/admin/delete-role?id='.$value->id.'" data-delete-link="" class="user-delete-link">Delete</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/delete-role?id=' . $value->id . '" data-delete-link="" class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
                 $data[] = $nestedValue;
@@ -87,31 +82,40 @@ class RoleController extends Controller
         return view('admin/ManageRoleView');
     }
 
-    public function addRole(){
+
+    // To view Add Role
+    public function addRole()
+    {
         return view('admin/addRole');
     }
 
-    public function addRoleData(Request $request){
-        
+
+
+    // To add a role
+    public function addRoleData(Request $request)
+    {
+
         date_default_timezone_set("Asia/Calcutta");
-        
-        
+        $this->validate($request, [
+            "role-name" => "required|unique:tbl_master_roles,name",
+        ]);
+
 
         $groups = "";
-        if(!empty($request->input('groups'))){
-            foreach($request->input('groups') as $group){
-                $groups .= $group.",";  
+        if (!empty($request->input('groups'))) {
+            foreach ($request->input('groups') as $group) {
+                $groups .= $group . ",";
             }
         }
-        
+
 
         $pages = "";
-        if(!empty($request->input('pages'))){
-            foreach($request->input('pages') as $list){
-                $pages .= $list.",";  
+        if (!empty($request->input('pages'))) {
+            foreach ($request->input('pages') as $list) {
+                $pages .= $list . ",";
             }
         }
-    
+
         $role = new Roles;
         $role->name = $request->input('role-name');
         $role->group_id = $groups;
@@ -119,52 +123,55 @@ class RoleController extends Controller
         $role->status = (int)($request->input('role-status'));
         $role->is_show_to_user = 1;
         $role->created_date_time = date('Y-m-d H:i:s');
-        if($role->save())
-        {
-            return redirect()->route('manage_role');
+        if ($role->save()) {
+            return redirect()->route('manage_role')->with("message", "Role is added");
+        } else {
+            return redirect()->route('manage_role')->with("error", "Role was not Added");
         }
-        else{
-            dd($role);
-        }
-
     }
 
-    public function UpdateRole(Request $req){
-        $role = Roles::where('id',$req->id)->first();
-        if(!$role){
-            dd("Invalid User Id");   
+
+    // To view update role
+    public function UpdateRole(Request $req)
+    {
+        $role = Roles::where('id', $req->id)->first();
+        if (!$role) {
+            dd("Invalid User Id");
         }
-        $page_ids = explode(",",$role->page_id);
-        $group_ids = explode(",",$role->group_id);
-        if(!empty($page_ids)){
+        $page_ids = explode(",", $role->page_id);
+        $group_ids = explode(",", $role->group_id);
+        if (!empty($page_ids)) {
             array_pop($page_ids);
         }
-        if(!empty($group_ids)){
+        if (!empty($group_ids)) {
             array_pop($group_ids);
         }
         $name = $role->name;
         $status = $role->status;
         $id = $role->id;
-        return view('admin/UpdateRole')->with(compact('page_ids','group_ids','name','status','id'));
+        return view('admin/UpdateRole')->with(compact('page_ids', 'group_ids', 'name', 'status', 'id'));
     }
 
-    public function UpdateRoleData(Request $request){
+
+    // To Update a Role
+    public function UpdateRoleData(Request $request)
+    {
         $id = (int)$request->role_id;
-        $role = Roles::where('id','=',$id)->first();
-        
+        $role = Roles::where('id', '=', $id)->first();
+
 
         $groups = "";
-        if(!empty($request->input('groups'))){
-            foreach($request->input('groups') as $group){
-                $groups .= $group.",";  
+        if (!empty($request->input('groups'))) {
+            foreach ($request->input('groups') as $group) {
+                $groups .= $group . ",";
             }
         }
-        
+
 
         $pages = "";
-        if(!empty($request->input('pages'))){
-            foreach($request->input('pages') as $list){
-                $pages .= $list.",";  
+        if (!empty($request->input('pages'))) {
+            foreach ($request->input('pages') as $list) {
+                $pages .= $list . ",";
             }
         }
         $role->name = $request->input('role-name');
@@ -173,20 +180,21 @@ class RoleController extends Controller
         $role->status = (int)($request->input('role-status'));
         $role->is_show_to_user = 1;
         $role->updated_date_time = date('Y-m-d H:i:s');
-        if($role->save())
-        {
-            return redirect()->route('manage_role');
+        if ($role->save()) {
+            return redirect()->route('manage_role')->with("message", "Role is updated");
+        } else {
+            return redirect()->route('manage_role')->with("error", "Role was not updated");
         }
-        else{
-            dd($role);
-        }
-
     }
-    public function DeleteRoleData(Request $req){
-        $role = Roles::where('id',$req->id)->get()->first();
+
+
+    // To delete a role
+    public function DeleteRoleData(Request $req)
+    {
+        $role = Roles::where('id', $req->id)->get()->first();
         $role->status = 2;
+        $role->name = $role->name . "_deleted";
         $role->save();
-        return redirect()->route('manage_role');
+        return redirect()->route('manage_role')->with("error", "Role is deleted");
     }
-
 }
