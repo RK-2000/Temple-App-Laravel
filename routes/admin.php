@@ -35,7 +35,6 @@ Route::prefix('admin')->group(function(){
         Route::get('/roles',[App\Http\Controllers\Admin\RoleController::class,'manageRole'])->name('manage_role');
         Route::get('/add-role',[App\Http\Controllers\Admin\RoleController::class,'addRole'])->name('add_role');
         Route::post('/add-role',[App\Http\Controllers\Admin\RoleController::class,'addRoleData'])->name('admin.addRole.post');
-        
         Route::get('/update-role',[App\Http\Controllers\Admin\RoleController::class,'UpdateRole'])->name('update_role');
         Route::post('/update-role',[App\Http\Controllers\Admin\RoleController::class,'UpdateRoleData'])->name('admin.UpdateRole.post');
         

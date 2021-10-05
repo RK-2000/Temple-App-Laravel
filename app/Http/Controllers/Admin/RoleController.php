@@ -15,7 +15,6 @@ class RoleController extends Controller
     
         if($request->ajax())
         {
-               
             $start = $request->start;
             $length = $request->length;
             $column = $request->order[0]['column'];
