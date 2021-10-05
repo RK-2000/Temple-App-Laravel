@@ -25,7 +25,9 @@ Route::prefix('admin')->group(function(){
         
         //User
         Route::get('/add-user',[App\Http\Controllers\Admin\AdminUserController::class,'addUser'])->name('add_user');
-        Route::get('/user-list',[App\Http\Controllers\Admin\AdminUserController::class,'addUserData'])->name('users_list');
+
+        // Route::get('/user-list',[App\Http\Controllers\Admin\AdminUserController::class,'addUserData'])->name('   users_list');
+        Route::get('/user-list',[App\Http\Controllers\Admin\AdminUserController::class,'UserData'])->name('users_list');
 
         //Event
         Route::get('/event-type',[App\Http\Controllers\Admin\EventController::class,'eventType'])->name('event_type');
@@ -35,11 +37,13 @@ Route::prefix('admin')->group(function(){
         Route::get('/roles',[App\Http\Controllers\Admin\RoleController::class,'manageRole'])->name('manage_role');
         Route::get('/add-role',[App\Http\Controllers\Admin\RoleController::class,'addRole'])->name('add_role');
         Route::post('/add-role',[App\Http\Controllers\Admin\RoleController::class,'addRoleData'])->name('admin.addRole.post');
+
         // Update Role
         Route::get('/update-role',[App\Http\Controllers\Admin\RoleController::class,'UpdateRole'])->name('update_role');
         Route::post('/update-role',[App\Http\Controllers\Admin\RoleController::class,'UpdateRoleData'])->name('admin.UpdateRole.post');
         // Delete Role
         Route::get('/delete-role', [App\Http\Controllers\Admin\RoleController::class,'DeleteRoleData'])->name('admin.deleteRole');
+
 
         //Prasad
         Route::get('/manage-prasad',[App\Http\Controllers\Admin\PrasadController::class,'index'])->name('prshad_type');

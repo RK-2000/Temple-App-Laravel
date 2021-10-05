@@ -68,6 +68,7 @@ class RoleController extends Controller
                                     </button>
                                     <ul class="dropdown-menu text-center">
                                     <li><a href="http://127.0.0.1:8000/admin/update-role?id='.$value->id.'">Edit</a></li>
+
                                     <li><a href="http://127.0.0.1:8000/admin/delete-role?id='.$value->id.'" data-delete-link="" class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
@@ -181,7 +182,6 @@ class RoleController extends Controller
         }
 
     }
-
     public function DeleteRoleData(Request $req){
         $role = Roles::where('id',$req->id)->get()->first();
         $role->status = 2;
