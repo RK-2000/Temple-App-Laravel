@@ -8,6 +8,8 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ URL::to('/assets/vendors/css/vendor.bundle.base.css')}}">
     <link rel="stylesheet" href="{{ URL::to('/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
