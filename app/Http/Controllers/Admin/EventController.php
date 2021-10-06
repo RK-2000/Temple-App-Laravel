@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Event;
+use App\Models\ManageEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,8 +20,25 @@ class EventController extends Controller
         return view('admin/ManageEventView',['eventTypes'=>$eventTypes]);
     }
 
-    public function manageEvent(){
-        return view('admin/ManageEventview');
+    public function manageEvent(Request $request){
+        $data = new ManageEvent;
+        $this->validate($request, [
+            'event_types_id' => 'required',
+            'event_date_time' => 'required',
+            'name' => 'required',
+            'place' => 'required|max:250', 
+            'description' => 'required',
+            'status' => 'required'
+        ]);
+        $data->name = $request->name;
+        $data->place = $request->place;
+        $data->description = $request->description;
+        $data->status = $request->status;
+        $data->event_types_id = $request->event_types_id;
+        $data->event_date_time = $request->event_date_time;
+        ManageEvent::AddEvent($data);
+
+        return redirect()->route('event')->with('message','Event Added');
     }
 
     public function addEventType(Request $request){
