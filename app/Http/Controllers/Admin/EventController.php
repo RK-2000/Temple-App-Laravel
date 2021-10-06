@@ -14,7 +14,9 @@ class EventController extends Controller
     }
 
     public function event(){
-        return view('admin/ManageEventView');
+        $eventTypes = Event::all();
+        
+        return view('admin/ManageEventView',['eventTypes'=>$eventTypes]);
     }
 
     public function manageEvent(){
@@ -38,9 +40,7 @@ class EventController extends Controller
             return redirect()->route('event_type')->with('message','Event Added');
         }else{
             return redirect()->route('event_type')->with('error','Event Not Added');
-    }
-        
-
+        }     
     }
     
 }

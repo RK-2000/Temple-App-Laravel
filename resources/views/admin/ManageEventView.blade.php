@@ -52,9 +52,9 @@
                   <div class="form-group col-md-2 col-6">
                     <label for="exampleFormControlSelect1">Event Type</label>
                     <select class="form-control" id="exampleFormControlSelect1">
-                      <option value="1">Fasting</option>
-                      <option value="2">Yoga</option>
-                      <option value="3">Dhyan</option>
+                      @foreach ($eventTypes as $eventName )
+                      <option value="<?php echo $eventName['event_types_id'] ?>">{{$eventName['name']}}</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group col-md-2 col-6">
