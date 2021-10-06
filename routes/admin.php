@@ -47,6 +47,7 @@ Route::prefix('admin')->group(function () {
         Route::middleware(['check.permissions:4'])->group(function () {
             Route::get('/event-type', [App\Http\Controllers\Admin\EventController::class, 'eventType'])->name('event_type');
             Route::get('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'event'])->name('event');
+            Route::get('/event_list', [App\Http\Controllers\Admin\EventController::class, 'EventList'])->name('event_list');
             Route::post('/add-event-type', [App\Http\Controllers\Admin\EventController::class, 'addEventType'])->name('addEventType');
             Route::post('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'manageEvent'])->name('manage_event');
         });

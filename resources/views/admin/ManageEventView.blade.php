@@ -1,6 +1,6 @@
 @extends('admin/layout')
 @section('content')
-
+<script src="https://cdn.ckeditor.com/4.16.2/basic/ckeditor.js"></script>
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="page-header">
@@ -34,32 +34,33 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="post">
+              <form method="POST" action="{{route('manage_event')}}">
+                @csrf
                 {{-- 		place		 description --}}
                 <div class="modal-body">
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label for="formGroupExampleInput">Event Name</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                    <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Example input">
                   </div>
                   
                   <div class="form-group col-md-2">
                     <label for="start">Event date:</label>
-                    <input class="form-control" type="date" id="start" name="trip-start"
+                    <input class="form-control" type="date" name="event_date_time" id="start" name="trip-start"
                           value="2018-07-22"
                           min="2021-01-01" max="2040-12-31">
                   </div>
                   <div class="form-group col-md-2 col-6">
                     <label for="exampleFormControlSelect1">Event Type</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                      <option value="1">Fasting</option>
-                      <option value="2">Yoga</option>
-                      <option value="3">Dhyan</option>
+                    <select class="form-control" id="exampleFormControlSelect1" name="event_types_id">
+                      @foreach ($eventTypes as $eventName )
+                      <option value="<?php echo $eventName['event_types_id'] ?>">{{$eventName['name']}}</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group col-md-2 col-6">
                     <label for="exampleFormControlSelect1">Status</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                    <select class="form-control" name="status" id="exampleFormControlSelect1">
                       <option value="0">Active</option>
                       <option value="1">In Active</option>
                     </select>
@@ -69,11 +70,11 @@
 
                   <div class="form-group col-6">
                     <label for="Address" class="col-form-label">Address:</label>
-                    <textarea class="form-control" id="address"></textarea>
+                    <textarea class="form-control" id="address" name="place"></textarea>
                   </div>
                   <div class="form-group col-6">
                     <label for="message-text" class="col-form-label">Description:</label>
-                    <textarea class="form-control" id=desc"></textarea>
+                    <textarea class="form-control" id=description" rows="10" cols="20" name="description"></textarea>
                   </div>
                   
                 </div>
@@ -99,4 +100,8 @@
   </div>
   <!-- content-wrapper ends -->
 </div>
+<script>
+
+  CKEDITOR.replace('description');
+</script>
 @endsection
