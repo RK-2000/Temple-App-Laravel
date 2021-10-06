@@ -33,6 +33,8 @@ Route::prefix('admin')->group(function () {
         //Event
         Route::get('/event-type', [App\Http\Controllers\Admin\EventController::class, 'eventType'])->name('event_type');
         Route::get('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'event'])->name('event');
+        Route::post('/add-event-type', [App\Http\Controllers\Admin\EventController::class, 'addEventType'])->name('addEventType');
+        Route::post('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'manageEvent'])->name('manage_event');
 
         //Roles
         Route::get('/roles', [App\Http\Controllers\Admin\RoleController::class, 'manageRole'])->name('manage_role');

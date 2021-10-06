@@ -1,14 +1,21 @@
 @extends('admin/layout')
-@section('content')
-    
+{{-- @section('custom_scripts')
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+@endsection --}}
+
+@section('content')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="page-header">
       <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
           <i class="mdi mdi-border-color"></i>
-        </span> Manage Events Types
+        </span> Add Event Type 
       </h3>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -35,15 +42,16 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="post">
+              <form method="POST" action="{{route('addEventType')}}">
+                @csrf
                 <div class="modal-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Event Name</label>
-                    <input type="text" class="form-control" name="event-name" placeholder="Event Type Name" required> 
+                    <input type="text" class="form-control" name="name" placeholder="Event Type Name" required> 
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Event Type Status</label>
-                    <select class="form-control" id="event-type" name="event-status" required>
+                    <select class="form-control" id="event-type" name="status" required>
                       <option value="1">Active</option>
                       <option value="0">Inactive</option>
                     </select>
@@ -72,5 +80,24 @@
   </div>
   <!-- content-wrapper ends -->
 </div>
+
+  @if($errors->any())
+      <script type="text/javascript">
+          var error = "{{$errors->first()}}";
+          toastr.error(error);
+      </script>
+  @endif
+  @if(session()->has('message'))
+      <script type="text/javascript">
+          var message = "{{session()->get('message')}}";
+          toastr.success(message);
+      </script>
+  @endif
+  @if (session()->has('error'))
+      <script type="text/javascript">
+          var error = "{{session()->get('error')}}";
+          toastr.error(error);
+      </script>
+  @endif
 
 @endsection

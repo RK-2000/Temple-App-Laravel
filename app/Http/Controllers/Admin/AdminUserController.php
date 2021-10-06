@@ -38,11 +38,9 @@ class AdminUserController extends Controller
             $admin->password=$password;
             $admin->status=$request->status;
             $admin->created_date_time = $current_date_time;
-            if($admin->save()){
-                return redirect()->route('add_user');
-            }else {
-                dd('Not Added');
-            }
+            $admin->save();
+            return redirect()->route('users_list')->with('message','User is Added');
+            
            
        }
 
@@ -128,32 +126,24 @@ class AdminUserController extends Controller
         $data->id = $id;
         return view('admin/EditUserView',['data'=>$data,'roles' => $roles]);
     }
-    public function EditData(Request $data){
+    public function EditData(Request $request){
         // dd($data);
         
-        $validator = Validator::make($data->all(), [
+        $this->validate($request, [
             'admin_users_id' => 'required',
             'user_name' => 'required|max:100', 
-            'email' => 'required|email|unique:tbl_admin_users,email,'.$data->admin_users_id.',admin_users_id',
+            'email' => 'required|email|unique:tbl_admin_users,email,'.$request->admin_users_id.',admin_users_id',
             'mobile' => 'required',
             'status' => 'required'
         ]);
-        if($validator->fails()) {
-                dd('Validation Fail');
-        }else{
-            $admin = Admin::where('admin_users_id',$data->admin_users_id)->first(); 
-            $update_date_time = date('Y-m-d H:i:s');
-            $admin->role_id=$data->role_id;
-            $admin->user_name=$data->user_name;
-            $admin->email=$data->email;
-            $admin->mobile=$data->mobile;
-            $admin->status=$data->status;
-            $admin->update_date_time = $update_date_time;
-            $admin->save();
-            return redirect()->route('add_user');
-           
-       }
-
-        
+        $admin = Admin::where('admin_users_id',$request->admin_users_id)->first(); 
+        $admin->role_id=$request->role_id;
+        $admin->user_name=$request->user_name;
+        $admin->email=$request->email;
+        $admin->mobile=$request->mobile;
+        $admin->status=$request->status;
+        $admin->update_date_time = date('Y-m-d H:i:s');
+        $admin->save();
+        return redirect()->route('users_list')->with('message','User is updated');
     }   
 }
