@@ -17,15 +17,15 @@
       <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
           <i class="mdi mdi-border-color"></i>
-        </span> User Table
+        </span> Event Table
       </h3>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item" aria-current="page">
-            <span>Users</span>
+            <span>Events</span>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
-            <span>Users</span>
+            <span>Events</span>
           </li>
         </ol>
       </nav>
@@ -33,7 +33,7 @@
     <div class="row">
       <div class="col-12">
         <span class="d-flex align-items-left purchase-popup">
-          <a href="{{ route('add_user') }}" class="btn download-button purchase-button">Add Users</a>
+          <a href="{{ route('manage_event') }}" class="btn download-button purchase-button">Add Events</a>
         </span>
       </div>  
     </div>
