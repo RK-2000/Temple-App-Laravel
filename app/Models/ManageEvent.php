@@ -10,6 +10,8 @@ class ManageEvent extends Authenticatable
 {
     protected $table = 'tbl_events';
     public $timestamps = false;
+    protected $fillable = ['status'];
+    protected $primaryKey = 'events_id';
     use HasFactory;
 
     public static function AddEvent($data){

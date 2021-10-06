@@ -11,7 +11,7 @@
 @endsection
 @section('content')
   
-
+  
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="page-header">

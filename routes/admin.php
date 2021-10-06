@@ -48,6 +48,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/event-type', [App\Http\Controllers\Admin\EventController::class, 'eventType'])->name('event_type');
             Route::get('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'event'])->name('event');
             Route::get('/event_list', [App\Http\Controllers\Admin\EventController::class, 'EventList'])->name('event_list');
+            Route::get('/delete-event', [App\Http\Controllers\Admin\EventController::class, 'DeleteEvent'])->name('delete_event');
             Route::post('/add-event-type', [App\Http\Controllers\Admin\EventController::class, 'addEventType'])->name('addEventType');
             Route::post('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'manageEvent'])->name('manage_event');
         });
@@ -86,5 +87,9 @@ Route::prefix('admin')->group(function () {
         Route::middleware(['check.permissions:8'])->group(function () {
             Route::get('/video-gallery', [App\Http\Controllers\Admin\GalleryController::class, 'videoGallery'])->name('videos_gallery');
         });
+
+        // Settings
+        Route::get('/settings',[App\Http\Controllers\Admin\SettingsController::class, 'settingsIndex'])->name('settings');
+        Route::post('/settings-update',[App\Http\Controllers\Admin\SettingsController::class, 'settingUpdate'])->name('settingsUpdate');
     });
 });

@@ -5,6 +5,7 @@ use App\Models\Event;
 use App\Models\ManageEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 use Illuminate\Http\Request;
 
@@ -113,7 +114,7 @@ class EventController extends Controller
                                     </button>
                                     <ul class="dropdown-menu text-center">
                                     <li><a href="http://127.0.0.1:8000/admin/edit-user?id='.$value->events_id.'">Edit</a></li>
-                                    <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/delete-event?id='.$value->events_id.'" data-delete-link= class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
                 $data[] = $nestedValue;
@@ -130,5 +131,18 @@ class EventController extends Controller
 
         return view('admin/EventTable');
     }
+
+    public function DeleteEvent(Request $request){
+        // dd($request);
+        $this->validate($request,[
+            'id'=> 'required|numeric',
+        ]);
+        $id = $request->id;
+        // dd($id);
+        ManageEvent::where(['events_id'=>$id])->first()->update(['status'=>'2']);
+        return redirect()->back()->with('message','Event Deleted Succesfully');
+
+
+    }   
     
 }
