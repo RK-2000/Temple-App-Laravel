@@ -60,5 +60,75 @@ class EventController extends Controller
             return redirect()->route('event_type')->with('error','Event Not Added');
         }     
     }
+
+    public function EventList(Request $request){
+        if($request->ajax())
+        {
+            $start = $request->start;
+            $length = $request->length;
+            $column = $request->order[0]['column'];
+            $asc = $request->order[0]['dir'];
+            $search = $request->search['value'];
+
+            $event = ManageEvent::where('status','!=','2');
+
+        
+            $data = array();
+            
+            if(!empty($search)){
+                $where = "( name LIKE '%".$search."%' )";
+                $event->whereRaw($where);
+            }
+
+            if ($column == 1) {
+                $event->orderBy('id',$asc);
+             } elseif($column == 2) {
+                $event->orderBy('name',$asc);
+             } elseif($column == 3) {
+                $event->orderBy('status',$asc);
+             } elseif($column == 4) {
+                 $event->orderBy('created_date_time',$asc);
+             } 
+
+             $eventCount = $event->count();
+             $events = $event->offset($start)->limit($length)->get();  
+             $filteredValue = 0;
+             
+            foreach($events as $key => $value){
+                
+                $nestedValue = array();
+                $nestedValue[0] = $start+$key+1; 
+                $nestedValue[1] = $value->name;
+                if($value->status == 1){
+                    $nestedValue[2] = 'Active';
+                }
+                else{
+                    $nestedValue[2] = "Inactive";
+                }       
+                $nestedValue[3] = '<div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Action
+                                    <span class="caret">
+                                    </span>
+                                    </button>
+                                    <ul class="dropdown-menu text-center">
+                                    <li><a href="http://127.0.0.1:8000/admin/edit-user?id='.$value->events_id.'">Edit</a></li>
+                                    <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
+                                    </ul>
+                                </div>';
+                $data[] = $nestedValue;
+            }
+            $json_data = array(
+                "recordsTotal"    => $eventCount,
+                "recordsFiltered" => $eventCount,
+                "data"            => $data
+            );
+            echo json_encode($json_data);
+            exit;
+        }
+
+
+        return view('admin/EventTable');
+    }
     
 }
