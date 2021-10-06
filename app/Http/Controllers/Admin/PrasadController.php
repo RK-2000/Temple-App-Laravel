@@ -107,15 +107,17 @@ class PrasadController extends Controller
 
     public function UpdatePrasadData(Request $request)
     {
-        date_default_timezone_set("Asia/Calcutta");
+        
         $this->validate($request, [
-            'name' => 'required',
-            'status' => 'required'
+            'prasad_types_id' => "required|numeric|exists:tbl_master_prasad_types,prasad_types_id",
+            'name' => 'required|unique:tbl_master_prasad_types,name,'.$request->prasad_types_id.',prasad_types_id',
+            'status' => 'required',
         ]);
         $prasad = PrasadType::where('prasad_types_id', $request->prasad_types_id)->first();
         $prasad->name = $request->name;
         $prasad->prasad_types_id = $request->prasad_types_id;
         $prasad->updated_date_time = date('Y-m-d H:i:s');
+        $prasad->status = $request->status;
         if ($prasad->save()) {
             return redirect()->route('prshad_type')->with("message", "Prasad Type is updated");
         } else {

@@ -4,11 +4,47 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Admin;
+use App\Models\Roles;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminUserController extends Controller
 {
     public function addUser(){
-        return view('admin/addUserView');
+        $roles = Roles::all();
+        return view('admin/addUserView',['roles'=>$roles]);
+    }
+
+    public function addUserData(Request $request){
+    
+        $admin = new Admin; 
+        $validator = Validator::make($request->all(), [
+            'user_name' => 'required|max:100',
+            'email' => 'required|email|unique:tbl_admin_users',
+            'mobile' => 'required',
+            'password' => 'required',
+            'status' => 'required'
+        ]);
+        if ($validator->fails()) {
+            dd('Validation Fail');
+       } else {
+            $current_date_time = date('Y-m-d H:i:s');
+            $admin->role_id=$request->role_id;
+            $admin->user_name=$request->user_name;
+            $admin->email=$request->email;
+            $admin->mobile=$request->mobile;
+            $password = Hash::make($request->password);
+            $admin->password=$password;
+            $admin->status=$request->status;
+            $admin->created_date_time = $current_date_time;
+            $admin->save();
+            return redirect()->route('users_list')->with('message','User is Added');
+            
+           
+       }
+
+
     }
 
     public function UserData(Request $request){
@@ -20,7 +56,7 @@ class AdminUserController extends Controller
             $asc = $request->order[0]['dir'];
             $search = $request->search['value'];
 
-            $role = Admin::all();
+            $role = Admin::where('status','!=','2');
 
         
             $data = array();
@@ -41,7 +77,7 @@ class AdminUserController extends Controller
              } 
 
              $rolesCount = $role->count();
-             $roles = $role->offsetGet($start)->limit($length)->get();  
+             $roles = $role->offset($start)->limit($length)->get();  
              $filteredValue = 0;
              
             foreach($roles as $key => $value){
@@ -55,15 +91,14 @@ class AdminUserController extends Controller
                 else{
                     $nestedValue[2] = "Inactive";
                 }       
-                $nestedValue[3] = $value->created_date_time;
-                $nestedValue[4] = '<div class="dropdown">
+                $nestedValue[3] = '<div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                     Action
                                     <span class="caret">
                                     </span>
                                     </button>
                                     <ul class="dropdown-menu text-center">
-                                    <li><a href="http://127.0.0.1:8000/admin/update-role?id='.$value->id.'">Edit</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/edit-user?id='.$value->admin_users_id.'">Edit</a></li>
                                     <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
@@ -82,4 +117,33 @@ class AdminUserController extends Controller
         return view('admin/UsersView');
 
     }
+
+    public function EditUser(Request $data){
+        $id = $data->id;
+        $roles = Roles::all();
+        $datas = Admin::GetData($id);
+        $data = $datas[0];
+        $data->id = $id;
+        return view('admin/EditUserView',['data'=>$data,'roles' => $roles]);
+    }
+    public function EditData(Request $request){
+        // dd($data);
+        
+        $this->validate($request, [
+            'admin_users_id' => 'required',
+            'user_name' => 'required|max:100', 
+            'email' => 'required|email|unique:tbl_admin_users,email,'.$request->admin_users_id.',admin_users_id',
+            'mobile' => 'required',
+            'status' => 'required'
+        ]);
+        $admin = Admin::where('admin_users_id',$request->admin_users_id)->first(); 
+        $admin->role_id=$request->role_id;
+        $admin->user_name=$request->user_name;
+        $admin->email=$request->email;
+        $admin->mobile=$request->mobile;
+        $admin->status=$request->status;
+        $admin->update_date_time = date('Y-m-d H:i:s');
+        $admin->save();
+        return redirect()->route('users_list')->with('message','User is updated');
+    }   
 }
