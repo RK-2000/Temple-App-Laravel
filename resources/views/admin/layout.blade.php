@@ -45,7 +45,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link Route::get('/dashboard',[App\Http\Controllers\admin\AdminDashboardController::class,'index'])->name('admin.dashboard');dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">{{Auth::user()->email}}</p>
+                  <p class="mb-1 text-black">{{Auth::user()->user_name}} <i class="mdi mdi-account"></i></p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
