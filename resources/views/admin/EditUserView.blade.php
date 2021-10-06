@@ -47,7 +47,7 @@
                                       @endforeach      
                                     </select>
                                   </div>
-                                  <input type="hidden" value="{{$data->id}}" name="id">
+                                  <input type="hidden" value="{{$data->id}}" name="admin_users_id">
                                   <div class="form-group col md-2 my-4">
                                     <label for="exampleFormControlSelect1">Status</label>
                                     <select class="form-control " name="status" value="{{$data->status}}" id="exampleFormControlSelect1">

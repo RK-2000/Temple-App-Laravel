@@ -24,12 +24,11 @@ class AdminUserController extends Controller
             'email' => 'required|email|unique:tbl_admin_users',
             'mobile' => 'required',
             'password' => 'required',
-            // 'role_id' => 'required',
             'status' => 'required'
         ]);
         if ($validator->fails()) {
             dd('Validation Fail');
-       }else{
+       } else {
             $current_date_time = date('Y-m-d H:i:s');
             $admin->role_id=$request->role_id;
             $admin->user_name=$request->user_name;
@@ -39,11 +38,9 @@ class AdminUserController extends Controller
             $admin->password=$password;
             $admin->status=$request->status;
             $admin->created_date_time = $current_date_time;
-            if($admin->save()){
-                return redirect()->route('add_user');
-            }else {
-                dd('Not Added');
-            }
+            $admin->save();
+            return redirect()->route('users_list')->with('message','User is Added');
+            
            
        }
 
@@ -94,7 +91,6 @@ class AdminUserController extends Controller
                 else{
                     $nestedValue[2] = "Inactive";
                 }       
-                // $nestedValue[3] = $value->created_date_time;
                 $nestedValue[3] = '<div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                     Action
@@ -130,34 +126,24 @@ class AdminUserController extends Controller
         $data->id = $id;
         return view('admin/EditUserView',['data'=>$data,'roles' => $roles]);
     }
-    public function EditData(Request $data){
-
-        $admin = new Admin; 
-        $validator = Validator::make($data->all(), [
-            'user_name' => 'required|max:100',
-            'email' => 'required',
+    public function EditData(Request $request){
+        // dd($data);
+        
+        $this->validate($request, [
+            'admin_users_id' => 'required',
+            'user_name' => 'required|max:100', 
+            'email' => 'required|email|unique:tbl_admin_users,email,'.$request->admin_users_id.',admin_users_id',
             'mobile' => 'required',
             'status' => 'required'
         ]);
-        if($validator->fails()) {
-                dd('Validation Fail');
-        }else{
-            $update_date_time = date('Y-m-d H:i:s');
-            $admin->role_id=$data->role_id;
-            $admin->user_name=$data->user_name;
-            $admin->email=$data->email;
-            $admin->mobile=$data->mobile;
-            $admin->status=$data->status;
-            $admin->id=$data->id;
-            $data = Admin::EditData($admin);
-            if($data){
-                dd('success');
-            }else{
-                dd('fail');
-            }
-           
-       }
-
-        
+        $admin = Admin::where('admin_users_id',$request->admin_users_id)->first(); 
+        $admin->role_id=$request->role_id;
+        $admin->user_name=$request->user_name;
+        $admin->email=$request->email;
+        $admin->mobile=$request->mobile;
+        $admin->status=$request->status;
+        $admin->update_date_time = date('Y-m-d H:i:s');
+        $admin->save();
+        return redirect()->route('users_list')->with('message','User is updated');
     }   
 }
