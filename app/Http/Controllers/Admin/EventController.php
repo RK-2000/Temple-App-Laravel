@@ -16,8 +16,7 @@ class EventController extends Controller
     }
 
     public function event(){
-        $eventTypes = Event::all();
-        
+        $eventTypes = Event::all();  
         return view('admin/ManageEventView',['eventTypes'=>$eventTypes]);
     }
 
@@ -113,7 +112,7 @@ class EventController extends Controller
                                     </span>
                                     </button>
                                     <ul class="dropdown-menu text-center">
-                                    <li><a href="http://127.0.0.1:8000/admin/edit-user?id='.$value->events_id.'">Edit</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/edit-event?id='.$value->events_id.'">Edit</a></li>
                                     <li><a href="http://127.0.0.1:8000/admin/delete-event?id='.$value->events_id.'" data-delete-link= class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
@@ -145,4 +144,39 @@ class EventController extends Controller
 
     }   
     
+    public function EditEvent(Request $request){
+        $id = $request->id;
+        $data = ManageEvent::GetEvent($id);
+        $eventTypes = Event::all();
+        return view('admin/ManageEventView')->with(compact('data','eventTypes','id'));
+
+    }
+    public function EditEventData(Request $request){
+        $rules = [
+            'name' => 'required|',
+            "place" => "required|",
+            'event_date_time' =>'required',
+            'description' =>'required',
+            'status' =>'required'
+	    ];
+	    $validator = Validator::make($request->all(), $rules);
+	    if($validator->fails()){
+            $response["message"] = "errors";
+            $response["errors"] = $validator->errors()->toArray();
+            $response["errors_keys"] = array_keys($validator->errors()->toArray());
+            $er = $response["errors_keys"];
+            $n = $er[0];
+            return redirect()->back()->with('error',$response['errors'][$n][0]);
+        }
+        $data['name'] = $request->name;
+        $data['place'] = $request->place;
+        $data['event_date_time'] = $request->event_date_time;
+        $data['description'] = $request->description;
+        $data['status'] = $request->status;
+        $data['events_id'] = $request->id;
+        ManageEvent::UpdateEvent($data);        
+        return redirect()->route('event_list')->with('message','Event Updated');
+
+    }
+
 }

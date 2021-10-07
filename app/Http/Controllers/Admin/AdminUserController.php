@@ -123,14 +123,13 @@ class AdminUserController extends Controller
         return view('admin/UsersView');
     }
 
-    public function EditUser(Request $request)
+    public function EditUser(Request $data)
     {
-        $id = $request->id;
-
+        $id = $data->id;
         $roles = Roles::all();
-        $data = Admin::where('admin_users_id', $id)->first();
-        // $data = $datas[0];
-
+        $datas = Admin::GetData($id);
+        $data = $datas[0];
+        $data->id = $id;
         return view('admin/EditUserView', ['data' => $data, 'roles' => $roles]);
     }
     public function EditData(Request $request)
@@ -145,7 +144,8 @@ class AdminUserController extends Controller
         ]);
 
 
-        $admin = Admin::where('admin_users_id', $request->admin_users_id)->first();
+        
+        
         $admin->role_id = $request->role_id;
         $admin->user_name = $request->user_name;
         $admin->email = $request->email;
