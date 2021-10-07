@@ -67,14 +67,10 @@ class AdminUserController extends Controller
             if ($column == 1) {
                 $role->orderBy('id', $asc);
             } elseif ($column == 2) {
-                $role->orderBy('user_name', $asc);
+                $role->orderBy('name', $asc);
             } elseif ($column == 3) {
-                $role->orderBy('email', $asc);
-            } elseif ($column == 4) {
-                $role->orderBy('role_id', $asc);
-            } elseif ($column == 5) {
                 $role->orderBy('status', $asc);
-            } elseif ($column == 6) {
+            } elseif ($column == 4) {
                 $role->orderBy('created_date_time', $asc);
             }
 
@@ -86,18 +82,13 @@ class AdminUserController extends Controller
 
                 $nestedValue = array();
                 $nestedValue[0] = $start + $key + 1;
-                $nestedValue[1] = $value->user_name;
-                $nestedValue[2] = $value->email;
-                //Fetch role name
-                $role_name = Roles::where('id', $value->role_id)->first();
-                $nestedValue[3] = $role_name->name;
-
+                $nestedValue[1] = $value->email;
                 if ($value->status == 1) {
-                    $nestedValue[4] = 'Active';
+                    $nestedValue[2] = 'Active';
                 } else {
-                    $nestedValue[4] = "Inactive";
+                    $nestedValue[2] = "Inactive";
                 }
-                $nestedValue[5] = '<div class="dropdown">
+                $nestedValue[3] = '<div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                     Action
                                     <span class="caret">
@@ -123,14 +114,13 @@ class AdminUserController extends Controller
         return view('admin/UsersView');
     }
 
-    public function EditUser(Request $request)
+    public function EditUser(Request $data)
     {
-        $id = $request->id;
-
+        $id = $data->id;
         $roles = Roles::all();
-        $data = Admin::where('admin_users_id', $id)->first();
-        // $data = $datas[0];
-
+        $datas = Admin::GetData($id);
+        $data = $datas[0];
+        $data->id = $id;
         return view('admin/EditUserView', ['data' => $data, 'roles' => $roles]);
     }
     public function EditData(Request $request)
@@ -145,7 +135,8 @@ class AdminUserController extends Controller
         ]);
 
 
-        $admin = Admin::where('admin_users_id', $request->admin_users_id)->first();
+        
+        
         $admin->role_id = $request->role_id;
         $admin->user_name = $request->user_name;
         $admin->email = $request->email;

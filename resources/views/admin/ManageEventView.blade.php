@@ -38,15 +38,15 @@
                                       <div class="card">
                                         <div class="card-body">
 
-                                          <form class="row needs-validation" method="POST" action="{{route('manage_event')}}" enctype="multipart/form-data">
+                                          <form class="row needs-validation" method="POST" action="{{route('edit_event.post')}}" >
                                             @csrf
                                             <div class="form-group col-md-6">
                                               <label for="name">Event Name</label>
-                                              <input type="text" class="form-control" name="name" value="" id="name" placeholder="Event Name">
+                                              <input type="text" class="form-control" name="name" value="<?php echo $data->name ?>" id="name" placeholder="Event Name">
                                             </div>
                                             <div class="form-group col-md-6">
                                               <label for="start">Event date:</label>
-                                              <input class="form-control" type="date" name="event_date_time" id="start" name="trip-start"
+                                              <input class="form-control" type="date" value="<?php echo $data->event_date_time ?>" name="event_date_time" id="start" name="trip-start"
                                                     value="2018-07-22"
                                                     min="2021-01-01" max="2040-12-31">
                                             </div>
@@ -67,14 +67,14 @@
                                             </div>
                                             <div class="form-group col-md-12">
                                               <label for="Address" class="col-form-label">Address:</label>
-                                              <textarea class="form-control" id="address" name="place" rows="5" cols="30"></textarea>
+                                              <textarea class="form-control" id="address" name="place" rows="5" cols="30"><?php echo $data->place ?></textarea>
                                             </div>
                                             <div class="form-group col-12">
                                               <label for="message-text" class="col-form-label">Description:</label>
-                                              <textarea class="form-control" id=description" rows="10" cols="30" name="description"></textarea>
+                                              <textarea class="form-control" id=description" rows="10" cols="30"  name="description"><?php echo $data->description ?></textarea>
                                             </div>
                                             
-                                            <input type="hidden" value="" name="id">
+                                            <input type="hidden" value="<?php echo $id ?>" name="id">
                                             <button type="submit" class="btn btn-gradient-primary mx-3">Save</button>
                                             
                                           </form>
