@@ -67,6 +67,24 @@
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->
     <!-- inject:js -->
+    @if($errors->any())
+      <script type="text/javascript">
+          var error = "{{$errors->first()}}";
+          toastr.error(error);
+      </script>
+  @endif
+  @if(session()->has('message'))
+      <script type="text/javascript">
+          var message = "{{session()->get('message')}}";
+          toastr.success(message);
+      </script>
+  @endif
+  @if (session()->has('error'))
+      <script type="text/javascript">
+          var error = "{{session()->get('error')}}";
+          toastr.error(error);
+      </script>
+  @endif
     <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
     <script src="{{ asset('assets/js/hoverable-collapse.js') }} "></script>
     <script src="{{ asset('assets/js/misc.js')}} "></script>

@@ -29,7 +29,7 @@ class CheckPermissions
         if (in_array($page_id, $page_id_list) or $role->page_id == null) {
             return $next($request);
         } else {
-            dd('you dont have enough permissions');
+            abort(403);
         }
     }
 }
