@@ -108,13 +108,14 @@ class RoleController extends Controller
             }
         }
 
-
         $pages = "";
         if (!empty($request->input('pages'))) {
             foreach ($request->input('pages') as $list) {
                 $pages .= $list . ",";
             }
         }
+        $groups = substr($groups, 0, -1);
+        $pages = substr($pages, 0, -1);
 
         $role = new Roles;
         $role->name = $request->input('role-name');
@@ -138,13 +139,15 @@ class RoleController extends Controller
         if (!$role) {
             dd("Invalid User Id");
         }
-        $page_ids = explode(",", $role->page_id);
-        $group_ids = explode(",", $role->group_id);
-        if (!empty($page_ids)) {
-            array_pop($page_ids);
+
+
+        if (!empty($role->page_id)) {
+            $page_ids = explode(",", $role->page_id);
         }
-        if (!empty($group_ids)) {
-            array_pop($group_ids);
+
+
+        if (!empty($role->group_id)) {
+            $group_ids = explode(",", $role->group_id);
         }
         $name = $role->name;
         $status = $role->status;
@@ -167,13 +170,16 @@ class RoleController extends Controller
             }
         }
 
-
         $pages = "";
         if (!empty($request->input('pages'))) {
             foreach ($request->input('pages') as $list) {
                 $pages .= $list . ",";
             }
         }
+
+        $groups = substr($groups, 0, -1);
+        $pages = substr($pages, 0, -1);
+
         $role->name = $request->input('role-name');
         $role->group_id = $groups;
         $role->page_id = $pages;
