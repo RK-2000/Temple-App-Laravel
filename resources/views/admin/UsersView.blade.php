@@ -37,8 +37,8 @@
         </span>
       </div>  
     </div>
-    <div class="row">
-      <div class="col-md-12">
+    <div class="row ">
+      <div class="col-12">
         <table id="table_id" class="table table-bordered">
           <thead>
             <tr>
