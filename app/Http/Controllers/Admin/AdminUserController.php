@@ -125,7 +125,6 @@ class AdminUserController extends Controller
     }
     public function EditData(Request $request)
     {
-        // dd($data);
 
         $this->validate($request, [
             'admin_users_id' => 'required',
