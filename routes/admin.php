@@ -89,7 +89,9 @@ Route::prefix('admin')->group(function () {
         });
 
         // Settings
-        Route::get('/settings',[App\Http\Controllers\Admin\SettingsController::class, 'settingsIndex'])->name('settings');
-        Route::post('/settings-update',[App\Http\Controllers\Admin\SettingsController::class, 'settingUpdate'])->name('settingsUpdate');
+        Route::middleware(['check.permissions:14'])->group(function () {
+            Route::get('/settings',[App\Http\Controllers\Admin\SettingsController::class, 'settingsIndex'])->name('settings');
+            Route::post('/settings-update',[App\Http\Controllers\Admin\SettingsController::class, 'settingUpdate'])->name('settingsUpdate');
+        });
     });
 });
