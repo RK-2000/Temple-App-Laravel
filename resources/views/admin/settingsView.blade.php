@@ -32,11 +32,11 @@
                         <div class="valid-feedback">
                                     </div>
                                   </div>
-                                  <div class="col-md-6 my-1">
-                                   <label class="file">Temple Logo</label><br>
-                                   <input type="file" id="file" aria-label="File browser example" name="temple_logo">
-                                   <span class="file-custom"></span>
-                                    </label>
+                      <div class="col-md-6">
+                        <label for="adress" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                        <div class="valid-feedback">
+                                    </div>
                                   </div>
                                   <div class="col-md-6 my-4">
                                 <label for="facebook_link" class="form-label">Facebook Link</label>
@@ -62,27 +62,29 @@
                                   <input type="text" class="form-control" id="instagram_link" name="instagram_link" aria-describedby="inputGroupPrepend" required>
                                  </div>
                                   </div>
-                                  <div class="col-md-6 my-4">
-                                 <label for="address" class="form-label">Address</label>
-                                  <div class="input-group has-validation">
-                                  <textarea name="address" id="address"  cols="60" rows="10"></textarea>
-                                  </div>
-                                 </div>
-                                  <div class="col-md-6 my-4">
+                                  
+                                  <div class="col-md-12 my-4">
                                     <label for="about_us" class="form-label">About us </label>
                                     <textarea name="about_us" id="about_us" cols="30" rows="10"></textarea>
                                   </div>
-                             
-                                  <div class="col-12 my-2">
+                                  <div class="col-md-6 my-1">
+                                   <label class="file">Temple Logo</label><br>
+                                    <input type="file" id="file" aria-label="File browser example" name="temple_logo">
+                                    <span class="file-custom"></span>
+                                    </label>
+                                    </div>
+                                  <div class="col-12 my-4">
                                     <button class="btn btn-primary" type="submit">Add Details</button>
                                   </div>
                                 </form>
 
 
                                 <script>
-
-                                            CKEDITOR.replace('about_us');
-                                          </script>
+                                     CKEDITOR.replace('about_us');
+                                 </script>
+                                            {{-- <script>
+                                            CKEDITOR.replace('address');
+                                            </script> --}}
 
 
 @endsection
