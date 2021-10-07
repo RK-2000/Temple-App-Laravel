@@ -127,8 +127,7 @@ class AdminUserController extends Controller
         return view('admin/EditUserView',['data'=>$data,'roles' => $roles]);
     }
     public function EditData(Request $request){
-        // dd($data);
-        
+
         $this->validate($request, [
             'admin_users_id' => 'required',
             'user_name' => 'required|max:100', 
