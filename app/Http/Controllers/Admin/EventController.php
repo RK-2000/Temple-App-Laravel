@@ -113,7 +113,7 @@ class EventController extends Controller
                                     </span>
                                     </button>
                                     <ul class="dropdown-menu text-center">
-                                    <li><a href="http://127.0.0.1:8000/admin/edit-user?id='.$value->events_id.'">Edit</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/edit-event?id='.$value->events_id.'">Edit</a></li>
                                     <li><a href="http://127.0.0.1:8000/admin/delete-event?id='.$value->events_id.'" data-delete-link= class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
@@ -145,4 +145,12 @@ class EventController extends Controller
 
     }   
     
+    public function EditEvent(Request $request){
+        $id = $request->id;
+        $data = ManageEvent::GetEvent($id);
+
+        return redirect()->route('event')->with('data',$data);
+
+    }
+
 }

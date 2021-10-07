@@ -39,7 +39,6 @@ class SettingsController extends Controller
             return redirect()->route('settings')->with('error',$response['errors'][$n][0]);
         }
         $data = SettingsModel::where('id',$request->id)->first(); 
-        // dd($data);
         $data->temple_name = $request->temple_name;
         $data->temple_logo = $request->temple_logo;
         $data->address = $request->address;
