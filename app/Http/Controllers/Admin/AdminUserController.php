@@ -16,7 +16,7 @@ class AdminUserController extends Controller
         $roles = Roles::all();
         return view('admin/addUserView', ['roles' => $roles]);
     }
-
+    
     public function addUserData(Request $request)
     {
 
@@ -134,7 +134,7 @@ class AdminUserController extends Controller
     }
     public function EditData(Request $request)
     {
-
+        $admin = 
         $this->validate($request, [
             'admin_users_id' => 'required',
             'user_name' => 'required|max:100',
@@ -142,9 +142,6 @@ class AdminUserController extends Controller
             'mobile' => 'required',
             'status' => 'required'
         ]);
-
-
-        
         
         $admin->role_id = $request->role_id;
         $admin->user_name = $request->user_name;
