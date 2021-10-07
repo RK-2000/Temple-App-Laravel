@@ -98,16 +98,16 @@ class AdminUserController extends Controller
                     $nestedValue[4] = "Inactive";
                 }
                 $nestedValue[5] = '<div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Action
-                                    <span class="caret">
-                                    </span>
-                                    </button>
-                                    <ul class="dropdown-menu text-center">
-                                    <li><a href="http://127.0.0.1:8000/admin/edit-user?id=' . $value->admin_users_id . '">Edit</a></li>
-                                    <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
-                                    </ul>
-                                </div>';
+                                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                        Action
+                                        <span class="caret">
+                                        </span>
+                                        </button>
+                                        <ul class="dropdown-menu text-center">
+                                        <li><a href="http://127.0.0.1:8000/admin/edit-user?id=' . $value->admin_users_id . '">Edit</a></li>
+                                        <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
+                                        </ul>
+                                    </div>';
                 $data[] = $nestedValue;
             }
             $json_data = array(
@@ -132,6 +132,8 @@ class AdminUserController extends Controller
         $data->id = $id;
         return view('admin/EditUserView', ['data' => $data, 'roles' => $roles]);
     }
+
+
     public function EditData(Request $request)
     {
 
@@ -143,9 +145,7 @@ class AdminUserController extends Controller
             'status' => 'required'
         ]);
 
-
-        
-        
+        $admin = Admin::where('admin_users_id', $request->admin_users_id)->first();
         $admin->role_id = $request->role_id;
         $admin->user_name = $request->user_name;
         $admin->email = $request->email;
