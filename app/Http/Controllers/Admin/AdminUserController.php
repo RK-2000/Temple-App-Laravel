@@ -67,10 +67,14 @@ class AdminUserController extends Controller
             if ($column == 1) {
                 $role->orderBy('id', $asc);
             } elseif ($column == 2) {
-                $role->orderBy('name', $asc);
+                $role->orderBy('user_name', $asc);
             } elseif ($column == 3) {
-                $role->orderBy('status', $asc);
+                $role->orderBy('email', $asc);
             } elseif ($column == 4) {
+                $role->orderBy('role_id', $asc);
+            } elseif ($column == 5) {
+                $role->orderBy('status', $asc);
+            } elseif ($column == 6) {
                 $role->orderBy('created_date_time', $asc);
             }
 
@@ -82,13 +86,18 @@ class AdminUserController extends Controller
 
                 $nestedValue = array();
                 $nestedValue[0] = $start + $key + 1;
-                $nestedValue[1] = $value->email;
+                $nestedValue[1] = $value->user_name;
+                $nestedValue[2] = $value->email;
+                //Fetch role name
+                $role_name = Roles::where('id', $value->role_id)->first();
+                $nestedValue[3] = $role_name->name;
+
                 if ($value->status == 1) {
-                    $nestedValue[2] = 'Active';
+                    $nestedValue[4] = 'Active';
                 } else {
-                    $nestedValue[2] = "Inactive";
+                    $nestedValue[4] = "Inactive";
                 }
-                $nestedValue[3] = '<div class="dropdown">
+                $nestedValue[5] = '<div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                     Action
                                     <span class="caret">
