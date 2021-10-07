@@ -100,6 +100,24 @@
   </div>
   <!-- content-wrapper ends -->
 </div>
+@if($errors->any())
+      <script type="text/javascript">
+          var error = "{{$errors->first()}}";
+          toastr.error(error);
+      </script>
+  @endif
+  @if(session()->has('message'))
+      <script type="text/javascript">
+          var message = "{{session()->get('message')}}";
+          toastr.success(message);
+      </script>
+  @endif
+  @if (session()->has('error'))
+      <script type="text/javascript">
+          var error = "{{session()->get('error')}}";
+          toastr.error(error);
+      </script>
+  @endif
 <script>
 
   CKEDITOR.replace('description');

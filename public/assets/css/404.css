@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  body {
+    font-weight: 600;
+    color: #414141;
+  }
+  
+  .error_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-image: linear-gradient(-225deg, #4f4f4f, #343434);
+  }
+  .error_section_subtitle {
+    color: #25F193;
+    text-transform: uppercase;
+    letter-spacing: 5pt;
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-bottom: -5em;
+  }
+  .error_section .error_title {
+    --x-shadow: 0;
+    --y-shadow: 0;
+    --x:50%;
+    --y:50%;
+    font-size: 15rem;
+    transition: all 0.2s ease;
+    position: relative;
+    padding: 2rem;
+  }
+  .error_section .error_title:hover {
+    transition: all 0.2s ease;
+    text-shadow: var(--x-shadow) var(--y-shadow) 10px #1A1A1A;
+  }
+  .error_section .error_title p {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background-image: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.05), transparent);
+    background-position: var(--x) var(--y);
+    background-repeat: no-repeat;
+    text-shadow: none;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.1s ease;
+  } 
+
+  .btn {
+    display:inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    text-align:center;
+    transition: all 0.2s;
+    }
+
+    .btn:hover{
+    color:#000000;
+    background-color:#FFFFFF;
+    }
+    @media all and (max-width:30em){
+     .btn{
+    display:block;
+    margin:0.4em auto;
+     }
+    
+  
+  .btn:hover {
+    text-shadow: 0px 1px 1px #ffffff;
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.1), inset 0px -3px 7px 0px rgba(0, 0, 0, 0.2);
+    transition: ease-out 0.2s all;
+  }
+  
