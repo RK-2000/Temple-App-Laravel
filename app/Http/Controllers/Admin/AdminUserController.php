@@ -16,21 +16,27 @@ class AdminUserController extends Controller
         $roles = Roles::all();
         return view('admin/addUserView', ['roles' => $roles]);
     }
-
+    
     public function addUserData(Request $request)
     {
-
         $admin = new Admin;
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'user_name' => 'required|max:100',
             'email' => 'required|email|unique:tbl_admin_users',
-            'mobile' => 'required',
+            'mobile' => 'required|numeric|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|',
             'password' => 'required',
             'status' => 'required'
-        ]);
-        if ($validator->fails()) {
-            dd('Validation Fail');
-        } else {
+	    ];
+	    $validator = Validator::make($request->all(), $rules);
+	    if($validator->fails()){
+            $response["message"] = "errors";
+            $response["errors"] = $validator->errors()->toArray();
+            $response["errors_keys"] = array_keys($validator->errors()->toArray());
+            $er = $response["errors_keys"];
+            $n = $er[0];
+            return redirect()->back()->with('error',$response['errors'][$n][0]);
+        }
+       
             $current_date_time = date('Y-m-d H:i:s');
             $admin->role_id = $request->role_id;
             $admin->user_name = $request->user_name;
@@ -42,7 +48,7 @@ class AdminUserController extends Controller
             $admin->created_date_time = $current_date_time;
             $admin->save();
             return redirect()->route('users_list')->with('message', 'User is Added');
-        }
+        
     }
 
     public function UserData(Request $request)
@@ -60,7 +66,7 @@ class AdminUserController extends Controller
             $data = array();
 
             if (!empty($search)) {
-                $where = "( name LIKE '%" . $search . "%' )";
+                $where = "( user_name LIKE '%" . $search . "%' )";
                 $role->whereRaw($where);
             }
 
@@ -136,7 +142,7 @@ class AdminUserController extends Controller
 
     public function EditData(Request $request)
     {
-
+        $admin = 
         $this->validate($request, [
             'admin_users_id' => 'required',
             'user_name' => 'required|max:100',

@@ -25,16 +25,13 @@
                         <h3 class="page-title">
                           <span class="page-title-icon bg-gradient-primary text-white mr-2">
                             <i class="mdi mdi-account-settings"></i>
-                          </span> Settings
+                          </span> Manage Website
                         </h3>
-                      
+                       
                       </div>
-                    
-                    
-                    
-
                                 {{-- Form Template Start--}}
-
+                                  
+                               
                                   <div class="row">
 
                                     <div class="col-md-12 grid-margin stretch-card">
@@ -45,43 +42,50 @@
                                             @csrf
                                             <div class="form-group col-md-6">
                                               <label for="temple_name">Temple Name</label>
-                                              <input type="text" class="form-control" name="temple_name" value="<?php echo $data['temple_name'] ?>" id="temple_name" placeholder="Temple Name">
+                                            
+                                              <input type="text" class="form-control" name="temple_name" value=" {{ $data->temple_name ?? "" }} " id="temple_name" placeholder="Temple Name">
                                             </div>
                                             <div class="form-group col-md-6">
                                               <label for="address ">Address</label>
-                                              <input type="text" class="form-control" id="address" name="address" value="<?php echo $data['address'] ?>" placeholder="Address">
+                                              <input type="text" class="form-control" id="address" name="address" value='{{ $data->address ?? "" }}' placeholder="Address">
                                             </div>
                                             <div class="form-group col-md-6">
                                               <label for="facebook_link">Facebook link</label>
-                                              <input type="text" class="form-control" id="facebook_link" name="facebook_link" value="<?php echo $data['facebook_link'] ?>"placeholder="Facebook link">
+                                              <input type="text" class="form-control" id="facebook_link" name="facebook_link" value='{{ $data->facebook_link ?? "" }}' placeholder="Facebook link">
                                             </div>
                                             <div class="form-group col-md-6">
                                               <label for="youtube_link">Youtube link</label>
-                                              <input type="text" class="form-control" id="youtube_link" name="youtube_link" value="<?php echo $data['youtube_link'] ?>"placeholder="Youtube link">
+                                              <input type="text" class="form-control" id="youtube_link" name="youtube_link" value='{{ $data->youtube_link ?? "" }}' placeholder="Youtube link">
                                             </div>
                                             <div class="form-group col-md-6">
                                               <label for="twitter_link ">Twitter link</label>
-                                              <input type="text" class="form-control" id="twitter_link" name="twitter_link" value="<?php echo $data['twitter_link'] ?>"placeholder="Twitter link">
+                                              <input type="text" class="form-control" id="twitter_link" name="twitter_link" value='{{ $data->twitter_link ?? "" }}' placeholder="Twitter link">
                                             </div>
                                             <div class="form-group col-md-6">
                                               <label for="instagram_link ">Instagram link</label>
-                                              <input type="text" class="form-control" id="instagram_link" name="instagram_link" value="<?php echo $data['instagram_link'] ?>"placeholder="Instagram link">
+                                              <input type="text" class="form-control" id="instagram_link" name="instagram_link" value='{{ $data->instagram_link ?? "" }}'placeholder="Instagram link">
                                             </div>
                                             
-                                            <input type="hidden" value="<?php echo $data['id'] ?>" name="id">
+                                            <input type="hidden" value='{{ $data->facebook_link ?? "" }}' name="id">
                                             
-                                            <div class="form-group col-md-12">
+                                            <div class="form-group col-md-12 ">
                                               <label for="about_us">About Us</label>
-                                              <textarea class="form-control" id="about_us" name="about_us" rows="10" cols="30" ><?php echo $data['about_us'] ?></textarea>
+                                              <textarea class="form-control" id="about_us" name="about_us" rows="10" cols="30" >{{ $data->about_us ?? "" }}</textarea>
                                             </div>
-                                            <div class="form-group ">
+                                            <div class="form-group col-md-2 ">
+                                              <label>Current Logo</label>
+                                              <img id="preview-image-before-upload" src="{{ $data->temple_logo ?? "" }}"
+                                                  alt="No Logo Added" style="max-height: 100px; ">
+                                          </div>
+                                            <div class="form-group col-md-3">
                                               <label>File upload</label>
-                                              <input type="file" name="temple_logo" class="file-upload-default">
+                                              <input type="file" name="temple_logo"  class="file-upload-default">
                                               <div class="input-group col-xs-12">
-                                                <input type="file" name="temple_logo" class="form-control file-upload-info"  placeholder="Upload Image">
+                                                <input type="file" name="temple_logo" class="form-control file-upload-info"  placeholder="Upload Image" value=''>
                                             </div>
-                                            <button type="submit" class="btn btn-gradient-primary mr-2 col-md-6">Submit</button>
-                                            
+                                            <div class="form-group col-md-12">
+                                            <button type="submit" class="btn btn-gradient-primary mr-2 ">Submit</button>
+                                          </div>
                                           </form>
                                         </div>
                                       </div>
@@ -89,9 +93,7 @@
                                     
                                   </div>
                                 </div>
-                                {{-- Form Template  --}}
-
-
+                            
 
 
 <script>
