@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use DB;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,13 +17,13 @@ class Admin extends Authenticatable
     public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;
 
-    public static function Adddata(Request $data){
-        $data.save();
+    public static function Adddata(Request $data)
+    {
+        $data->save();
     }
-    public static function GetData($id){
+    public static function GetData($id)
+    {
         $data  = DB::select('select * from tbl_admin_users where  admin_users_id = ?', [$id]);
         return $data;
     }
-    
-
 }

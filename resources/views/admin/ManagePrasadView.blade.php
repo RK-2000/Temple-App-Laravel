@@ -124,7 +124,9 @@
         </div>
       </div>
       @endif
+    </div>
     {{-- End of Update Model  --}}
+    <div class="row">
       <div class="col-md-12">
         <table id="table_id" class="table table-bordered">
           <thead>
@@ -137,9 +139,12 @@
             </tr>
           </thead>
         </table>
-      </div>      
-    </div>      
-    </div>
+      </div>
+    </div> 
+            
+    
+  </div>
+
   </div>
   <!-- content-wrapper ends -->
 </div>

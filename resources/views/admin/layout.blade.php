@@ -83,6 +83,7 @@
               <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#{{$group->page_name}}-collapse" aria-expanded="false" aria-controls="gallery-collapse">
                   <span class="menu-title">{{$group->page_label}}</span>
+                  <i class="{{$group->page_icon}} menu-icon"></i>
                 </a>
                 <div class="collapse" id="{{$group->page_name}}-collapse">
                   <ul class="nav flex-column sub-menu">

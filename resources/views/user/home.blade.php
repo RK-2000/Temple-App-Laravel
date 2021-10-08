@@ -68,10 +68,8 @@
                     <div class="row d-flex justify-content-center align-items-center slider-l-bg">
                         <div class="col-lg-2"></div>
                         <div class="col-lg-4 py-4 px-5">
-                            <h2>Khidkaleshwar Mandir<span>Dombivli</span></h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. Lorem Ipsum has been the industry's
-                                standard dummy text ever since the 1500s, when an unknown </p>
+                            <h2>{{ $temple_data->temple_name ?? ""}}, <span>Mandir</span></h2>
+                            <p><?php echo $temple_data->about_us;  ?> </p>
                             <a class="btn btn-danger btn-lider-one">Know More</a>
                         </div>
                         <div class="col-lg-6">
