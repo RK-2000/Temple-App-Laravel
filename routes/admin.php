@@ -49,15 +49,14 @@ Route::prefix('admin')->group(function () {
 
             Route::get('/event-type', [App\Http\Controllers\Admin\EventController::class, 'eventType'])->name('event_type');
             Route::post('/event-type', [App\Http\Controllers\Admin\EventController::class, 'addEventType'])->name('addEventType');
-            Route::post('/update-event-type', [App\Http\Controllers\Admin\PrasadController::class, 'UpdateEventType'])->name('update_event_type');
-            Route::get('/delete-event', [App\Http\Controllers\Admin\PrasadController::class, 'DeleteEventData'])->name('admin.deleteEvent');
+            Route::post('/update-event-type', [App\Http\Controllers\Admin\EventController::class, 'UpdateEventType'])->name('update_event_type');
+            Route::get('/delete-event-type', [App\Http\Controllers\Admin\EventController::class, 'DeleteEventType'])->name('admin.deleteEvent');
 
 
             Route::get('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'event'])->name('event');
             Route::get('/event_list', [App\Http\Controllers\Admin\EventController::class, 'EventList'])->name('event_list');
             Route::get('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEvent'])->name('edit_event');
 
-            Route::get('/delete-event', [App\Http\Controllers\Admin\EventController::class, 'DeleteEvent'])->name('delete_event');
             Route::post('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'manageEvent'])->name('manage_event');
             Route::post('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEventData'])->name('edit_event.post');
         });

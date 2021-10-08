@@ -68,7 +68,7 @@ class EventController extends Controller
                                     <ul class="dropdown-menu text-center">
                                     <li><a href="http://127.0.0.1:8000/admin/event-type?event_id=' . $value->event_types_id . '">Edit</a></li>
 
-                                    <li><a href="http://127.0.0.1:8000/admin/delete-event?id=' . $value->event_types_id . '" data-delete-link="" class="user-delete-link">Delete</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/delete-event-type?id=' . $value->event_types_id . '" data-delete-link="" class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
                 $data[] = $nestedValue;
@@ -80,6 +80,10 @@ class EventController extends Controller
             );
             echo json_encode($json_data);
             exit;
+        }
+        if ($request->get('event_id')) {
+            $eventType = EventType::where('event_types_id', '=', $request->get('event_id'))->first();
+            return view('admin/ManageEventTypeView')->with(compact('eventType'));
         }
         return view('admin/ManageEventTypeView');
     }
@@ -116,16 +120,15 @@ class EventController extends Controller
             'name' => 'required|unique:tbl_master_event_types,name,' . $request->event_types_id . ',event_types_id',
             'status' => 'required',
         ]);
-        dd($request->event_types_id);
-        $event = EventType::where('event_type_id', $request->event_types_id)->first();
+        $event = EventType::where('event_types_id', $request->event_types_id)->first();
         $event->name = $request->name;
         $event->event_types_id = $request->event_types_id;
         $event->updated_date_time = date('Y-m-d H:i:s');
         $event->status = $request->status;
         if ($event->save()) {
-            return redirect()->route('prshad_type')->with("message", "event Type is updated");
+            return redirect()->route('event_type')->with("message", "Event Type is updated");
         } else {
-            return redirect()->route('prshad_type')->with("error", "event Type could not be updated");
+            return redirect()->route('event_type')->with("error", "Event Type could not be updated");
         }
     }
 
@@ -136,7 +139,7 @@ class EventController extends Controller
         $event->status = 2;
         $event->name = $event->name . "_deleted";
         $event->save();
-        return redirect()->route('prshad_type')->with("message", "event is deleted");
+        return redirect()->route('event_type')->with("message", "Event is deleted");
     }
 
 
@@ -158,7 +161,6 @@ class EventController extends Controller
 
     public function manageEvent(Request $request)
     {
-        $data = new ManageEvent;
         $this->validate($request, [
             'event_types_id' => 'required',
             'event_date_time' => 'required',
@@ -181,6 +183,10 @@ class EventController extends Controller
 
     public function EventList(Request $request)
     {
+        if ($request->get('prasad_id')) {
+            $prasad = PrasadType::where('prasad_types_id', '=', $request->get('prasad_id'))->first();
+            return view('admin/ManagePrasadView')->with(compact('prasad'));
+        }
         if ($request->ajax()) {
             $start = $request->start;
             $length = $request->length;
@@ -205,7 +211,6 @@ class EventController extends Controller
             } elseif ($column == 3) {
                 $event->orderBy('status', $asc);
             } elseif ($column == 4) {
-                $event->orderBy('created_date_time', $asc);
             }
 
             $eventCount = $event->count();
@@ -248,17 +253,6 @@ class EventController extends Controller
         return view('admin/EventTable');
     }
 
-    public function DeleteEvent(Request $request)
-    {
-        // dd($request);
-        $this->validate($request, [
-            'id' => 'required|numeric',
-        ]);
-        $id = $request->id;
-        // dd($id);
-        ManageEvent::where(['events_id' => $id])->first()->update(['status' => '2']);
-        return redirect()->back()->with('message', 'Event Deleted Succesfully');
-    }
 
     public function EditEvent(Request $request)
     {

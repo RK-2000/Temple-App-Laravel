@@ -67,6 +67,7 @@
         {{-- End Modal --}}
 
         {{-- Modal For Update Event --}}
+        @if(isset($eventType))
         <div class="modal fade" id="update-event-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -77,18 +78,28 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="POST" action="{{route('updaye_event_type')}}">
+              <form method="POST" action="{{route('update_event_type')}}">
                 @csrf
+                <input type="hidden" name="event_types_id" value="{{$eventType->event_types_id }}" type="hidden" required> 
+
                 <div class="modal-body">
                   <div class="form-group">
                     <label for="exampleInputEmail1">Event Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Event Type Name" required> 
+                    <input value="{{ $eventType->name ?? "" }}" type="text" class="form-control" name="name" placeholder="Event Type Name" required> 
                   </div>
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Event Type Status</label>
                     <select class="form-control" id="event-type" name="status" required>
-                      <option value="1">Active</option>
-                      <option value="0">Inactive</option>
+                      <option value="1" <?php 
+                    if($eventType->status == 1){
+                      echo "selected";
+                    }
+                  ?>  >Active</option>
+                    <option value="0" <?php 
+                    if($eventType->status == 0){
+                      echo "selected";
+                    }
+                  ?>>Inactive</option>
                     </select>
                   </div>
                 </div>
@@ -100,6 +111,7 @@
             </div>
           </div>
         </div>
+        @endif
         {{-- End Modal --}}
         {{-- Button for add event --}}
         <div class="col-12">
@@ -129,7 +141,7 @@
   $(document).ready( function () {
     
     <?php 
-      if(isset($_GET['prasad_id'])){
+      if(isset($_GET['event_id'])){
     ?>
         $('#update-event-modal').modal('show');
     <?php

@@ -9,6 +9,6 @@ class EventType extends Model
 {
     protected $table = "tbl_master_event_types";
     public $timestamps = false;
-
+    protected $primaryKey = 'event_types_id';
     use HasFactory;
 }
