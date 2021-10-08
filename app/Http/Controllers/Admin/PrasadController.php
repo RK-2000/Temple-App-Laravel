@@ -8,6 +8,9 @@ use App\Models\PrasadType;
 
 class PrasadController extends Controller
 {
+
+    // Prasad Type
+    // Prasad Type View
     public function index(Request $request)
     {
 
@@ -85,6 +88,8 @@ class PrasadController extends Controller
         return view('admin/ManagePrasadView');
     }
 
+
+    // Add Prasad View
     public function addPrasadType(Request $request)
     {
         date_default_timezone_set("Asia/Calcutta");
@@ -104,13 +109,13 @@ class PrasadController extends Controller
         }
     }
 
-
+    //Update Prasad
     public function UpdatePrasadData(Request $request)
     {
-        
+
         $this->validate($request, [
             'prasad_types_id' => "required|numeric|exists:tbl_master_prasad_types,prasad_types_id",
-            'name' => 'required|unique:tbl_master_prasad_types,name,'.$request->prasad_types_id.',prasad_types_id',
+            'name' => 'required|unique:tbl_master_prasad_types,name,' . $request->prasad_types_id . ',prasad_types_id',
             'status' => 'required',
         ]);
         $prasad = PrasadType::where('prasad_types_id', $request->prasad_types_id)->first();
@@ -126,7 +131,7 @@ class PrasadController extends Controller
     }
 
 
-
+    //Delete Prasad Type
     public function DeletePrasadData(Request $req)
     {
         $prasad = PrasadType::where('prasad_types_id', $req->id)->get()->first();

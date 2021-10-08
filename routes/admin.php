@@ -45,13 +45,19 @@ Route::prefix('admin')->group(function () {
 
         //Event
         Route::middleware(['check.permissions:4'])->group(function () {
+            //Event Type
+
             Route::get('/event-type', [App\Http\Controllers\Admin\EventController::class, 'eventType'])->name('event_type');
+            Route::post('/event-type', [App\Http\Controllers\Admin\EventController::class, 'addEventType'])->name('addEventType');
+            Route::post('/update-event-type', [App\Http\Controllers\Admin\PrasadController::class, 'UpdateEventType'])->name('update_event_type');
+            Route::get('/delete-event', [App\Http\Controllers\Admin\PrasadController::class, 'DeleteEventData'])->name('admin.deleteEvent');
+
+
             Route::get('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'event'])->name('event');
             Route::get('/event_list', [App\Http\Controllers\Admin\EventController::class, 'EventList'])->name('event_list');
             Route::get('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEvent'])->name('edit_event');
 
             Route::get('/delete-event', [App\Http\Controllers\Admin\EventController::class, 'DeleteEvent'])->name('delete_event');
-            Route::post('/add-event-type', [App\Http\Controllers\Admin\EventController::class, 'addEventType'])->name('addEventType');
             Route::post('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'manageEvent'])->name('manage_event');
             Route::post('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEventData'])->name('edit_event.post');
         });
@@ -93,8 +99,8 @@ Route::prefix('admin')->group(function () {
 
         // Settings
         Route::middleware(['check.permissions:14'])->group(function () {
-            Route::get('/settings',[App\Http\Controllers\Admin\SettingsController::class, 'settingsIndex'])->name('settings');
-            Route::post('/settings-update',[App\Http\Controllers\Admin\SettingsController::class, 'settingUpdate'])->name('settingsUpdate');
+            Route::get('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'settingsIndex'])->name('settings');
+            Route::post('/settings-update', [App\Http\Controllers\Admin\SettingsController::class, 'settingUpdate'])->name('settingsUpdate');
         });
     });
 });
