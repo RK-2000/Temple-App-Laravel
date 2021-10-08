@@ -12,48 +12,35 @@
     
 
 <div class="main-panel">
+  
   <div class="content-wrapper">
-    <div class="page-header">
-      <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-          <i class="mdi mdi-border-color"></i>
-        </span> Event Table
-      </h3>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item" aria-current="page">
-            <span>Events</span>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            <span>Events</span>
-          </li>
-        </ol>
-      </nav>
-    </div>
     <div class="row">
       <div class="col-12">
         <span class="d-flex align-items-left purchase-popup">
           <a href="{{ route('manage_event') }}" class="btn download-button purchase-button">Add Events</a>
         </span>
-      </div>  
+      </div>
+      
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <table id="table_id" class="table table-bordered">
+              <thead>
+                <tr>
+                    <th id="id">ID</th>
+                    <th id = "name">Name</th>
+                    <th id = "status">Status</th>
+                    {{-- <th id = "created_at">Created At</th> --}}
+                    <th id='operation'>Operations</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+      
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <table id="table_id" class="table table-bordered">
-          <thead>
-            <tr>
-                <th id="id">ID</th>
-                <th id = "name">Name</th>
-                <th id = "status">Status</th>
-                {{-- <th id = "created_at">Created At</th> --}}
-                <th id='operation'>Operations</th>
-            </tr>
-          </thead>
-        </table>
-      </div>      
-    </div>
-    </div
-</div>
+
 @if($errors->any())
       <script type="text/javascript">
           var error = "{{$errors->first()}}";
