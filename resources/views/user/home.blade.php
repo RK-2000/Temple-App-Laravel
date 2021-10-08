@@ -120,7 +120,7 @@
             </button>
         </div>
     </div>
-
+    @if(isset($events))
     <div class="container-fluid py-5 tmpl-upcoming-ev">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -129,7 +129,12 @@
                     the peace but also sink in the divinity that calms your soul from within. </p>
             </div>
         </div>
+        
         <div class="row d-flex justify-content-center align-items-center mt-5">
+            
+            {{-- Events --}}
+
+            @foreach($events as $event)            
             <div class="col-lg-2 mb-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="card">
                     <div class="card-body">
@@ -140,91 +145,16 @@
                                 </div>
                             </div>
                             <div class="col-lg-9 px-0 col-sm col-9">
-                                <h6>legend of Simhastha</h6>
-                                <p class="text-justify">We’ve helped over 2,500 job
-                                    seekers to get into the most
-                                    popular tech teams.</p>
+                                <h6>{{ $event->name }}</h6> <!-- Event Name -->
+                                <p class="text-justify"><?php echo $event->description ?></p>
+                                    {{-- Event Desc --}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 mb-3" data-aos="fade-up" data-aos-delay="200">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3 text-center px-0 col-sm col-3">
-                                <div class="tml-ev-ic-dv">
-                                    <i class="fa fa-clone" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-9 px-0 col-sm col-9">
-                                <h6>legend of Simhastha</h6>
-                                <p class="text-justify">We’ve helped over 2,500 job
-                                    seekers to get into the most
-                                    popular tech teams.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 mb-3" data-aos="fade-up" data-aos-delay="300">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3 text-center px-0 col-sm col-3">
-                                <div class="tml-ev-ic-dv">
-                                    <i class="fa fa-clone" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-9 px-0 col-sm col-9">
-                                <h6>legend of Simhastha</h6>
-                                <p class="text-justify">We’ve helped over 2,500 job
-                                    seekers to get into the most
-                                    popular tech teams.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 mb-3" data-aos="fade-up" data-aos-delay="400">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3 text-center px-0 col-sm col-3">
-                                <div class="tml-ev-ic-dv">
-                                    <i class="fa fa-clone" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-9 px-0 col-sm col-9">
-                                <h6>legend of Simhastha</h6>
-                                <p class="text-justify">We’ve helped over 2,500 job
-                                    seekers to get into the most
-                                    popular tech teams.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 mb-3" data-aos="fade-up" data-aos-delay="500">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-3 text-center px-0 col-sm col-3">
-                                <div class="tml-ev-ic-dv">
-                                    <i class="fa fa-clone" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                            <div class="col-lg-9 px-0 col-sm col-9">
-                                <h6>legend of Simhastha</h6>
-                                <p class="text-justify">We’ve helped over 2,500 job
-                                    seekers to get into the most
-                                    popular tech teams.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+            {{-- End event --}}
         </div>
 
         <div class="row mt-5">
@@ -234,7 +164,7 @@
         </div>
 
     </div>
-
+    @endif
     <!-- service section start here -->
     <section class="tmpl-service-sec-hm">
         <div class="container">

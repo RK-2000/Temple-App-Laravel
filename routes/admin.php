@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
             Route::get('/user-list', [App\Http\Controllers\Admin\AdminUserController::class, 'UserData'])->name('users_list');
             Route::post('/edit-data', [App\Http\Controllers\Admin\AdminUserController::class, 'EditData'])->name('admin.edit_data');
             Route::post('/add-user-data', [App\Http\Controllers\Admin\AdminUserController::class, 'addUserData'])->name('addUserData');
+            Route::get('/delete-user', [App\Http\Controllers\Admin\AdminUserController::class, 'DeleteUser'])->name('delete.user');
         });
 
 

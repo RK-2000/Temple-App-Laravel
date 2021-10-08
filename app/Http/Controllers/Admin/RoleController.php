@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Roles;
+use App\Models\Admin;
+
 
 class RoleController extends Controller
 {
@@ -201,6 +203,11 @@ class RoleController extends Controller
         $role->status = 2;
         $role->name = $role->name . "_deleted";
         $role->save();
+
+        //Delete All users related to this role
+
+        Admin::where('role_id', $req->id)->update(['status' => 2]);
+
         return redirect()->route('manage_role')->with("error", "Role is deleted");
     }
 }
