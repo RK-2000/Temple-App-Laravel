@@ -11,12 +11,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminUserController extends Controller
 {
-
-    // View Add USer Form
-    public function addUser()
+    public function addUser(Request $request)
     {
-        $roles = Roles::where('status','!=',2)->get();
-        return view('admin/addUserView')->with(compact('roles'));
+        if($request->get('id')){
+            $data = Admin::where('admin_users_id', $request->id)->first();
+            $roles = Roles::where('status','!=','2')->get();
+            // dd($roles);
+            return view('admin/addUserView')->with(compact('data','roles'));
+        }
+        $roles = Roles::all();
+        return view('admin/addUserView', ['roles' => $roles]);
     }
 
     // Save User Data Into Database 
@@ -98,8 +102,13 @@ class AdminUserController extends Controller
                                         </span>
                                         </button>
                                         <ul class="dropdown-menu text-center">
+<<<<<<< HEAD
+                                        <li><a href="http://127.0.0.1:8000/admin/add-user?id=' . $value->admin_users_id . '">Edit</a></li>
+                                        <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
+=======
                                         <li><a href="http://127.0.0.1:8000/admin/edit-user?id=' . $value->admin_users_id . '">Edit</a></li>
                                         <li><a href="http://127.0.0.1:8000/admin/delete-user?id=' . $value->admin_users_id . '"class="user-delete-link">Delete</a></li>
+>>>>>>> c3b11a4e5d31f97adffb14b4fe00b29ea4f32483
                                         </ul>
                                     </div>';
                 $data[] = $nestedValue;
