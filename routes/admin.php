@@ -55,9 +55,9 @@ Route::prefix('admin')->group(function () {
 
             Route::get('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'event'])->name('event');
             Route::get('/event_list', [App\Http\Controllers\Admin\EventController::class, 'EventList'])->name('event_list');
-            Route::get('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEvent'])->name('edit_event');
+            Route::get('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEventView'])->name('edit_event');
 
-            Route::post('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'manageEvent'])->name('manage_event');
+            Route::post('/manage-event', [App\Http\Controllers\Admin\EventController::class, 'AddEvent'])->name('manage_event');
             Route::post('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEventData'])->name('edit_event.post');
         });
 

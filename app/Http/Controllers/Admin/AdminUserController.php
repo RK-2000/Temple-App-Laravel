@@ -11,8 +11,14 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminUserController extends Controller
 {
-    public function addUser()
+    public function addUser(Request $request)
     {
+        if($request->get('id')){
+            $data = Admin::where('admin_users_id', $request->id)->first();
+            $roles = Roles::where('status','!=','2')->get();
+            // dd($roles);
+            return view('admin/addUserView')->with(compact('data','roles'));
+        }
         $roles = Roles::all();
         return view('admin/addUserView', ['roles' => $roles]);
     }
@@ -110,7 +116,7 @@ class AdminUserController extends Controller
                                         </span>
                                         </button>
                                         <ul class="dropdown-menu text-center">
-                                        <li><a href="http://127.0.0.1:8000/admin/edit-user?id=' . $value->admin_users_id . '">Edit</a></li>
+                                        <li><a href="http://127.0.0.1:8000/admin/add-user?id=' . $value->admin_users_id . '">Edit</a></li>
                                         <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
                                         </ul>
                                     </div>';
