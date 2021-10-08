@@ -1,0 +1,89 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Oct 06, 2021 at 08:59 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.23
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `khidkaleshwar_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_admin_users`
+--
+
+CREATE TABLE `tbl_admin_users` (
+  `admin_users_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) DEFAULT NULL,
+  `user_name` varchar(180) DEFAULT NULL,
+  `email` varchar(180) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `status` enum('0','1','2') NOT NULL DEFAULT '0' COMMENT '0 mean inactive, 1 mean active and 2 mean deleted',
+  `created_date_time` datetime DEFAULT NULL,
+  `update_date_time` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_admin_users`
+--
+
+INSERT INTO `tbl_admin_users` (`admin_users_id`, `role_id`, `user_name`, `email`, `mobile`, `password`, `status`, `created_date_time`, `update_date_time`) VALUES
+(1, 1, 'Indra sirsssdsadasdsaa', 'indras@gmail.coms', '332312312', '$2y$10$7Lxpmn0HZCTbLglb/aUA8erDSisc/.tSr6BuqYiMsa7GrWr16X2uu', '1', NULL, '2021-10-05 17:50:31'),
+(2, 1, 'New User', 'news@gmail.com', '1212121', '$2y$10$7Lxpmn0HZCTbLglb/aUA8erDSisc/.tSr6BuqYiMsa7GrWr16X2uu', '1', NULL, '2021-10-06 11:10:32'),
+(3, 2, 'admin@gmail.com', 'admin@gmail.com', '45646', '$2y$10$TTO3wN4D1qZONEp2sUgPSuqhio7SIiujCjo7hzjZ3YLLotNm0odf.', '1', '2021-10-05 07:59:52', NULL),
+(4, 2, 'sss', 'adminsassss@gmail.com', '45646', '$2y$10$iHFtNHTxU.l9vDlI0qL7ce9bck06T/KN8aT6WBb3XgN5oIch39qka', '1', '2021-10-05 08:00:05', NULL),
+(5, 1, 'admin@gmail.com', 'mishrasomanshu@gmail.com', '321321', '$2y$10$ErOQqkEnMLWp.o9ymHgI0eUleTnlPFQT2tfFKsyxkhb3lWy8WGpfy', '1', '2021-10-05 08:00:38', NULL),
+(6, 2, 'Indra', 'indra@gmail.com', '332312312', '$2y$10$QI.R8hbtF1FSUwWfohaB2O9Fmn/JhKmcWgS/FI.xhCtcii9LnH7jG', '0', '2021-10-05 08:30:44', NULL),
+(7, 7, 'Ritk', 'ritik@gmail.com', '4234234', '$2y$10$qws1k/LCMJRQrFLqQuxI/usQShfUGx1P6/qisZs/T4EZTlPTeWBcG', '0', '2021-10-05 09:39:27', NULL),
+(8, 1, 'ritik1', 'ritik1@gmail.com', '45646', '$2y$10$Bj4qlAuHFodtBsOa3LoNNuZflNgmh/vj5LJs5A4VqbW/CtvVwhs3a', '1', '2021-10-05 09:39:52', NULL),
+(9, 1, 'New Ritik', 'ritik2@gmail.com', '45646', '$2y$10$ABXnDQdMqLlx9lDmCQv5seecal0ro4LRRT9926dhX..3wnXhM2IKe', '1', '2021-10-05 09:40:32', NULL),
+(10, 8, 'ritik3', 'ritik3@gmail.com', '45646', '$2y$10$ledKo2w5HdjWoxCAEp.RV.WzHwu/jSxAC5lpTvN5EYzSYSw/w7sAW', '1', '2021-10-05 09:42:11', NULL),
+(11, 8, 'ritik4', 'ritik4@gmail.com', '45646', '$2y$10$VLjgH0UoS8GSfH.CWytzYeayAtXRQAsFzwQK1w/jICInwtIU56oHe', '1', '2021-10-05 09:42:45', NULL),
+(12, 8, 'ritik5', 'ritik5@gmail.com', '45646', '$2y$10$EaW3XgU1n/3TceDvKIJfiOvbroXu9O.LaA0esOl5xw2QMtWfKhU9W', '1', '2021-10-05 09:43:07', NULL),
+(13, 6, 'admin@gmail.commm', 'admin@gmail.comfsdf', '45646', '$2y$10$aQXBlxlx4nUIRQVFp35j9OH2e3OCPGbCVeUQkfJrqDbl75uRaOyDu', '0', '2021-10-05 09:43:44', NULL),
+(14, 16, 'Somanshu Mishra', 'mishrasomanshsu@gmail.com', '43523432', '$2y$10$JWmKXjoB5Z3SzGFxYQu.gOAXAZy/6IboAsi.QsBC9UyVk.cW8oRNm', '1', '2021-10-05 09:45:38', NULL),
+(15, 7, 'admisssn@gmail.com', 'admisn@gmail.com', '45646', NULL, '1', NULL, NULL),
+(16, 1, 'Ritikaaaa', 'new@gmail.com', '1212121', NULL, '1', NULL, NULL),
+(17, 4, 'Manoj Raikwar Sir', 'manoj@gmail.com', '997897987', '$2y$10$X8z5bc9hf.UJ6TxGbtLzhOaelgOCOeElcnacwK26imvwM.Z.fKjm6', '1', '2021-10-05 17:30:06', '2021-10-05 17:30:53'),
+(18, 5, 'Piyush Sir', 'piyush@gmail.com', '9785757478', '$2y$10$8qvND748a94BevYJofZVou6T7tCA7O335CCDvCWsv4VtCUrLzfvuS', '1', '2021-10-06 11:12:30', NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tbl_admin_users`
+--
+ALTER TABLE `tbl_admin_users`
+  ADD PRIMARY KEY (`admin_users_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tbl_admin_users`
+--
+ALTER TABLE `tbl_admin_users`
+  MODIFY `admin_users_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

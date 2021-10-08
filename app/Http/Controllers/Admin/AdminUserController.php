@@ -22,12 +22,11 @@ class AdminUserController extends Controller
     // Save User Data Into Database 
     public function addUserData(Request $request)
     {
-
         $admin = new Admin;
         $this->validate($request, [
             'user_name' => 'required|max:100',
             'email' => 'required|email|unique:tbl_admin_users',
-            'mobile' => 'required',
+            'mobile' => 'required|numeric|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|',
             'password' => 'required',
             'status' => 'required'
         ]);
@@ -57,7 +56,7 @@ class AdminUserController extends Controller
             $role = Admin::where('status', '!=', '2');
             $data = array();
             if (!empty($search)) {
-                $where = "( name LIKE '%" . $search . "%' )";
+                $where = "( user_name LIKE '%" . $search . "%' )";
                 $role->whereRaw($where);
             }
             if ($column == 1) {
@@ -131,7 +130,7 @@ class AdminUserController extends Controller
     // Edit existing user details
     public function EditData(Request $request)
     {
-
+        $admin = 
         $this->validate($request, [
             'admin_users_id' => 'required',
             'user_name' => 'required|max:100',
