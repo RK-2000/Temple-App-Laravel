@@ -102,13 +102,10 @@ class AdminUserController extends Controller
                                         </span>
                                         </button>
                                         <ul class="dropdown-menu text-center">
-<<<<<<< HEAD
-                                        <li><a href="http://127.0.0.1:8000/admin/add-user?id=' . $value->admin_users_id . '">Edit</a></li>
-                                        <li><a href="javascript:void(0)" data-delete-link="" class="user-delete-link">Delete</a></li>
-=======
+
                                         <li><a href="http://127.0.0.1:8000/admin/edit-user?id=' . $value->admin_users_id . '">Edit</a></li>
                                         <li><a href="http://127.0.0.1:8000/admin/delete-user?id=' . $value->admin_users_id . '"class="user-delete-link">Delete</a></li>
->>>>>>> c3b11a4e5d31f97adffb14b4fe00b29ea4f32483
+
                                         </ul>
                                     </div>';
                 $data[] = $nestedValue;
@@ -159,11 +156,12 @@ class AdminUserController extends Controller
     }
 
     public function DeleteUser(Request $req)
-    {
+    {   
+        // dd($req);
         $user = Admin::where('admin_users_id', $req->id)->get()->first();
         $user->status = 2;
         $user->email = $user->name . "_deleted";
         $user->save();
-        return redirect()->route('user-list')->with("message", "User is deleted");
+        return redirect()->route('users_list')->with("message", "User is deleted");
     }
 }

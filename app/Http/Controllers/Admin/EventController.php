@@ -134,10 +134,11 @@ class EventController extends Controller
 
     // Delete Event Type
     public function DeleteEventType(Request $req)
-    {
+    {   
+        // dd($req);
         $event = EventType::where('event_types_id', $req->id)->get()->first();
         $event->status = 2;
-        $event->name = $event->name . "_deleted";
+        $event->name = $event->name . "_del";
         $event->save();
         return redirect()->route('event_type')->with("message", "Event is deleted");
     }
