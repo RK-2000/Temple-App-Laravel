@@ -84,6 +84,11 @@ class RoleController extends Controller
         return view('admin/ManageRoleView');
     }
 
+    // To view Add Role
+    public function addRole()
+    {
+        return view('admin/addRole');
+    }
 
     // To add a role
     public function addRoleData(Request $request)

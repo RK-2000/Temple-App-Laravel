@@ -109,6 +109,8 @@ Route::prefix('admin')->group(function () {
         Route::middleware(['check.permissions:16'])->group(function () {
             Route::get('/category',[App\Http\Controllers\Admin\CategoryController::class,'index'])->name('category');
             Route::post('/category',[App\Http\Controllers\Admin\CategoryController::class,'addCategory'])->name('add.category');
+            Route::get('/delete-category',[App\Http\Controllers\Admin\CategoryController::class,'deleteCategory'])->name('delete.category');
+
         });
 
         

@@ -67,7 +67,7 @@
         </div>
       </div>
       {{-- Modal For Update Event --}}
-      @if(isset($categoryId))
+      @if(isset($category))
       <div class="modal fade" id="update-category-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -80,23 +80,23 @@
             </div>
             <form method="POST">
               @csrf
-              <input type="hidden" name="event_types_id" value="{{$eventType->event_types_id }}" type="hidden" required> 
+              <input type="hidden" name="event_types_id" value="{{$category->id }}" type="hidden" required> 
 
               <div class="modal-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Event Name</label>
-                  <input value="{{ $eventType->name ?? "" }}" type="text" class="form-control" name="name" placeholder="Event Type Name" required> 
+                  <input value="{{ $category->name ?? "" }}" type="text" class="form-control" name="name" placeholder="Event Type Name" required> 
                 </div>
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Event Type Status</label>
                   <select class="form-control" id="event-type" name="status" required>
                     <option value="1" <?php 
-                  if($eventType->status == 1){
+                  if($category->status == 1){
                     echo "selected";
                   }
                 ?>  >Active</option>
                   <option value="0" <?php 
-                  if($eventType->status == 0){
+                  if($category->status == 0){
                     echo "selected";
                   }
                 ?>>Inactive</option>
@@ -113,6 +113,8 @@
       </div>
       @endif
       {{-- End Modal --}}
+
+      
       <div class="col-12">
         <span class="d-flex align-items-left purchase-popup">
           <button data-toggle="modal" data-target="#category-modal" class="btn download-button purchase-button">Add Category</button>
@@ -156,15 +158,26 @@
   @endif
 <script>
   $(document).ready( function () {
+    <?php 
+      if(isset($_GET['id'])){  
+    ?>
+        $('#update-category-modal').modal('show');
+    <?php
+      }
+    ?>
+
     $('#table_id').DataTable({
-        // "serverSide": false,
-        // "processing": false,
-        // "ajax": {
-        //     url: "{{route('category');}}",
-        //     type: "GET",
-        //     data: "{{route('category');}}"
+        "serverSide": true,
+        "processing": true,
+        "ajax": {
+            url: "{{route('category');}}",
+            type: "GET",
+            data: "{{route('category');}}"
         }
     });
 } );
+
+
 </script>
+
 @endsection
