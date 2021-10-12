@@ -62,6 +62,13 @@ Route::prefix('admin')->group(function () {
             Route::post('/edit-event', [App\Http\Controllers\Admin\EventController::class, 'EditEventData'])->name('edit_event.post');
         });
 
+        // Message
+        Route::middleware(['check.permissions:15'])->group(function () {
+
+            Route::get('/message', [App\Http\Controllers\Admin\MessageController::class, 'MessageData'])->name('message');
+            Route::post('/send-email', [App\Http\Controllers\Admin\MessageController::class, 'SendEmail'])->name('send_email');
+            
+        });
 
         //Roles
         Route::middleware(['check.permissions:11'])->group(function () {
