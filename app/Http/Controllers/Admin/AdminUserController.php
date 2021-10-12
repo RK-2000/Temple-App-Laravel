@@ -11,12 +11,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminUserController extends Controller
 {
-
-    // View Add USer Form
-    public function addUser()
+    public function addUser(Request $request)
     {
-        $roles = Roles::where('status','!=',2)->get();
-        return view('admin/addUserView')->with(compact('roles'));
+        if($request->get('id')){
+            $data = Admin::where('admin_users_id', $request->id)->first();
+            $roles = Roles::where('status','!=','2')->get();
+            // dd($roles);
+            return view('admin/addUserView')->with(compact('data','roles'));
+        }
+        $roles = Roles::all();
+        return view('admin/addUserView', ['roles' => $roles]);
     }
 
     // Save User Data Into Database 
@@ -98,8 +102,10 @@ class AdminUserController extends Controller
                                         </span>
                                         </button>
                                         <ul class="dropdown-menu text-center">
+
                                         <li><a href="http://127.0.0.1:8000/admin/edit-user?id=' . $value->admin_users_id . '">Edit</a></li>
                                         <li><a href="http://127.0.0.1:8000/admin/delete-user?id=' . $value->admin_users_id . '"class="user-delete-link">Delete</a></li>
+
                                         </ul>
                                     </div>';
                 $data[] = $nestedValue;
@@ -150,11 +156,12 @@ class AdminUserController extends Controller
     }
 
     public function DeleteUser(Request $req)
-    {
+    {   
+        // dd($req);
         $user = Admin::where('admin_users_id', $req->id)->get()->first();
         $user->status = 2;
         $user->email = $user->name . "_deleted";
         $user->save();
-        return redirect()->route('user-list')->with("message", "User is deleted");
+        return redirect()->route('users_list')->with("message", "User is deleted");
     }
 }

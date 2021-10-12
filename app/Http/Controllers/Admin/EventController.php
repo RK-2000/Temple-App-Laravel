@@ -6,7 +6,7 @@ use App\Models\EventType;
 use App\Models\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-
+use DB;
 use Illuminate\Http\Request;
 
 
@@ -134,10 +134,11 @@ class EventController extends Controller
 
     // Delete Event Type
     public function DeleteEventType(Request $req)
-    {
+    {   
+        // dd($req);
         $event = EventType::where('event_types_id', $req->id)->get()->first();
         $event->status = 2;
-        $event->name = $event->name . "_deleted";
+        $event->name = $event->name . "_del";
         $event->save();
         return redirect()->route('event_type')->with("message", "Event is deleted");
     }
@@ -153,14 +154,19 @@ class EventController extends Controller
     //View Update Event Form
 
     //Delete Event
-    public function event()
-    {
-        $eventTypes = Event::all();
+    public function event(Request $request)
+    {   
+        if($request->get('id')){
+            $data = Event::where('events_id', $request->id)->first();
+            $eventTypes = EventType::all();
+            return view('admin/ManageEventView')->with(compact('data','eventTypes'));
+        }
+        $eventTypes = EventType::all();
         return view('admin/ManageEventView')->with(compact('eventTypes'));
     }
 
-    public function manageEvent(Request $request)
-    {
+    public function AddEvent(Request $request)
+    {   
         $this->validate($request, [
             'event_types_id' => 'required',
             'event_date_time' => 'required',
@@ -227,17 +233,19 @@ class EventController extends Controller
                 } else {
                     $nestedValue[2] = "Inactive";
                 }
-                $nestedValue[3] = '<div class="dropdown">
+                $nestedValue[3] = $value->event_date_time;
+                $nestedValue[4] = '<div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                     Action
                                     <span class="caret">
                                     </span>
                                     </button>
                                     <ul class="dropdown-menu text-center">
-                                    <li><a href="http://127.0.0.1:8000/admin/edit-event?id=' . $value->events_id . '">Edit</a></li>
+                                    <li><a href="http://127.0.0.1:8000/admin/manage-event?id=' . $value->events_id . '">Edit</a></li>
                                     <li><a href="http://127.0.0.1:8000/admin/delete-event?id=' . $value->events_id . '" data-delete-link= class="user-delete-link">Delete</a></li>
                                     </ul>
                                 </div>';
+                
                 $data[] = $nestedValue;
             }
             $json_data = array(
@@ -254,15 +262,17 @@ class EventController extends Controller
     }
 
 
-    public function EditEvent(Request $request)
+    public function EditEventView(Request $request)
     {
         $id = $request->id;
-        $data = Event::GetEvent($id);
-        $eventTypes = Event::all();
+        $data = Event::where('events_id',$id)->first();
+        $eventTypes = EventType::all();
+
         return view('admin/ManageEventView')->with(compact('data', 'eventTypes', 'id'));
     }
     public function EditEventData(Request $request)
-    {
+    {   
+        // dd($request);
         $rules = [
             'name' => 'required|',
             "place" => "required|",
@@ -279,13 +289,14 @@ class EventController extends Controller
             $n = $er[0];
             return redirect()->back()->with('error', $response['errors'][$n][0]);
         }
-        $data['name'] = $request->name;
-        $data['place'] = $request->place;
-        $data['event_date_time'] = $request->event_date_time;
-        $data['description'] = $request->description;
-        $data['status'] = $request->status;
-        $data['events_id'] = $request->id;
-        Event::UpdateEvent($data);
+        $event = Event::where('events_id',$request->id)->first();
+        $event->name = $request->name;
+        $event->place = $request->place;
+        $event->event_date_time = $request->event_date_time;
+        $event->event_types_id = $request->event_types_id;
+        $event->description = $request->description;
+        $event->status = $request->status;
+        $event->save();
         return redirect()->route('event_list')->with('message', 'Event Updated');
     }
 }

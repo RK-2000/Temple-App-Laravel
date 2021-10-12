@@ -37,8 +37,11 @@ body {
       <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-
-            <form class="row needs-validation" method="POST" action="{{route('edit_event.post')}}" >
+            @if(isset($data))
+              <form class="row needs-validation" method="POST" action="  {{route('edit_event.post')}}   " >
+              @else
+                <form class="row needs-validation" method="POST" action="  {{route('manage_event')}}   " >
+              @endif
               @csrf
               <div class="form-group col-md-6">
                 <label for="name">Event Name</label>
@@ -71,8 +74,8 @@ body {
               <div class="form-group col-md-6">
                 <label for="status">Status</label>
                 <select class="form-control" name="status"  id="exampleFormControlSelect1">
-                  <option value="0">Active</option>
-                  <option value="1">In Active</option>
+                  <option value="1">Active</option>
+                  <option value="0">In Active</option>
                 </div></select>
               </div>
               <div class="form-group col-md-12">

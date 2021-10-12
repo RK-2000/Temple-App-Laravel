@@ -21,14 +21,24 @@
 <script src="https://cdn.ckeditor.com/4.16.2/basic/ckeditor.js"></script>
 
 <div class="content-wrapper">
-  <div class="page-header">
-    <h3 class="page-title">
-    <span class="page-title-icon bg-gradient-primary text-white mr-2">
-    <i class="mdi mdi-account-settings"></i>
-    </span> Add User
-    </h3>
-  </div>  
-{{-- Form Template Start--}}
+                      <div class="page-header">
+                        @if(isset($data))
+                        <h3 class="page-title">
+                          <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                            <i class="mdi mdi-account-settings"></i>
+                          </span> Edit User
+                        </h3>
+                      
+                      @else
+                      <h3 class="page-title">
+                        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                          <i class="mdi mdi-account-settings"></i>
+                        </span> Add User
+                      </h3>
+                      @endif
+
+                      </div>  
+                                {{-- Form Template Start--}}
 
   <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
