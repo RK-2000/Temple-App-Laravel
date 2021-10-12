@@ -120,10 +120,5 @@ Route::prefix('admin')->group(function () {
 
         });
 
-        
-        //Message
-        Route::middleware(['check.permissions:15'])->group(function () {
-            Route::get('/message',[App\Http\Controllers\Admin\MessageController::class,'index'])->name('message');
-        });
     });
 });
