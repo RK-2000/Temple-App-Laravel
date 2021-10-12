@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\EventType;
-use App\Models\ManageEvent;
+use App\Models\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -146,9 +146,9 @@ class EventController extends Controller
 
     // Event functions
 
-    //View Event List
+    // View Event List
 
-    //View Add Event Form
+    // View Add Event Form
 
     //View Update Event Form
 
@@ -169,7 +169,7 @@ class EventController extends Controller
             'description' => 'required',
             'status' => 'required'
         ]);
-        $data = new ManageEvent();
+        $data = new Event();
         $data->name = $request->name;
         $data->place = $request->place;
         $data->description = $request->description;
@@ -184,7 +184,7 @@ class EventController extends Controller
     public function EventList(Request $request)
     {
         if ($request->get('prasad_id')) {
-            $prasad = PrasadType::where('prasad_types_id', '=', $request->get('prasad_id'))->first();
+            $prasad = EventType::where('prasad_types_id', '=', $request->get('prasad_id'))->first();
             return view('admin/ManagePrasadView')->with(compact('prasad'));
         }
         if ($request->ajax()) {
@@ -194,7 +194,7 @@ class EventController extends Controller
             $asc = $request->order[0]['dir'];
             $search = $request->search['value'];
 
-            $event = ManageEvent::where('status', '!=', '2');
+            $event = Event::where('status', '!=', '2');
 
 
             $data = array();
@@ -257,7 +257,7 @@ class EventController extends Controller
     public function EditEvent(Request $request)
     {
         $id = $request->id;
-        $data = ManageEvent::GetEvent($id);
+        $data = Event::GetEvent($id);
         $eventTypes = Event::all();
         return view('admin/ManageEventView')->with(compact('data', 'eventTypes', 'id'));
     }
@@ -285,7 +285,7 @@ class EventController extends Controller
         $data['description'] = $request->description;
         $data['status'] = $request->status;
         $data['events_id'] = $request->id;
-        ManageEvent::UpdateEvent($data);
+        Event::UpdateEvent($data);
         return redirect()->route('event_list')->with('message', 'Event Updated');
     }
 }
