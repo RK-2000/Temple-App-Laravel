@@ -135,7 +135,6 @@ class EventController extends Controller
     // Delete Event Type
     public function DeleteEventType(Request $req)
     {   
-        // dd($req);
         $event = EventType::where('event_types_id', $req->id)->get()->first();
         $event->status = 2;
         $event->name = $event->name . "_del";
@@ -147,9 +146,9 @@ class EventController extends Controller
 
     // Event functions
 
-    //View Event List
+    // View Event List
 
-    //View Add Event Form
+    // View Add Event Form
 
     //View Update Event Form
 
@@ -190,7 +189,7 @@ class EventController extends Controller
     public function EventList(Request $request)
     {
         if ($request->get('prasad_id')) {
-            $prasad = PrasadType::where('prasad_types_id', '=', $request->get('prasad_id'))->first();
+            $prasad = EventType::where('prasad_types_id', '=', $request->get('prasad_id'))->first();
             return view('admin/ManagePrasadView')->with(compact('prasad'));
         }
         if ($request->ajax()) {
@@ -265,7 +264,6 @@ class EventController extends Controller
     public function EditEventView(Request $request)
     {
         $id = $request->id;
-        // $data = Event::GetEvent($id);
         $data = Event::where('events_id',$id)->first();
         $eventTypes = EventType::all();
 
@@ -273,8 +271,6 @@ class EventController extends Controller
     }
     public function EditEventData(Request $request)
     {   
-        // dd($request);
-        $event = new Event;
         $rules = [
             'name' => 'required|',
             "place" => "required|",
@@ -291,14 +287,14 @@ class EventController extends Controller
             $n = $er[0];
             return redirect()->back()->with('error', $response['errors'][$n][0]);
         }
+        $event = Event::where('events_id',$request->id)->first();
         $event->name = $request->name;
         $event->place = $request->place;
         $event->event_date_time = $request->event_date_time;
         $event->event_types_id = $request->event_types_id;
         $event->description = $request->description;
         $event->status = $request->status;
-
-        DB::table('tbl_events')->where('events_id',$request->id)->update(['name'=>$event->name,'event_types_id'=>$event->events_types_id,'place'=>$event->place,'event_date_time'=>$event->event_date_time,'status'=>$event->status,'description'=>$event->description]);
+        $event->save();
         return redirect()->route('event_list')->with('message', 'Event Updated');
     }
 }

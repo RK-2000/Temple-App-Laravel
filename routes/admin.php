@@ -95,19 +95,35 @@ Route::prefix('admin')->group(function () {
 
         //Image Gallery
         Route::middleware(['check.permissions:7'])->group(function () {
-            Route::get('/image-gallery', [App\Http\Controllers\Admin\GalleryController::class, 'imageGallery'])->name('images_gallery');
+            Route::get('/image-gallery', [App\Http\Controllers\Admin\ImageController::class, 'index'])->name('images_gallery');
         });
 
 
         //Video Gallery
         Route::middleware(['check.permissions:8'])->group(function () {
-            Route::get('/video-gallery', [App\Http\Controllers\Admin\GalleryController::class, 'videoGallery'])->name('videos_gallery');
+            Route::get('/video-gallery', [App\Http\Controllers\Admin\VideoController::class, 'index'])->name('videos_gallery');
         });
+
 
         // Settings
         Route::middleware(['check.permissions:14'])->group(function () {
             Route::get('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'settingsIndex'])->name('settings');
             Route::post('/settings-update', [App\Http\Controllers\Admin\SettingsController::class, 'settingUpdate'])->name('settingsUpdate');
+        });
+
+
+        //Category
+        Route::middleware(['check.permissions:16'])->group(function () {
+            Route::get('/category',[App\Http\Controllers\Admin\CategoryController::class,'index'])->name('category');
+            Route::post('/category',[App\Http\Controllers\Admin\CategoryController::class,'addCategory'])->name('add.category');
+            Route::get('/delete-category',[App\Http\Controllers\Admin\CategoryController::class,'deleteCategory'])->name('delete.category');
+
+        });
+
+        
+        //Message
+        Route::middleware(['check.permissions:15'])->group(function () {
+            Route::get('/message',[App\Http\Controllers\Admin\MessageController::class,'index'])->name('message');
         });
     });
 });
