@@ -11,7 +11,7 @@
 
 @section('content')
 <style>
-                      body {
+body {
   margin: 0;
   padding: 2rem 1.5rem;
   font: 1rem/1.5 "PT Sans", Arial, sans-serif;

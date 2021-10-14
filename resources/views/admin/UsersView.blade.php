@@ -72,5 +72,9 @@
         }
     });
 } );
+setTimeout(function(){ 
+  $("#table_id_wrapper:eq(0)").after("<p> Hello </p>");
+   }, 1000);
+
 </script>
 @endsection

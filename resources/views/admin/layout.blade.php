@@ -29,6 +29,11 @@
         height:100%;
 
       }
+      #sidebar{
+        height: 100vh;
+        position: -webkit-sticky;
+        position: sticky;
+      }
     </style>
   </head>
   <body>
@@ -104,12 +109,7 @@
         </nav>
         @yield('content')
 
-        {{-- Show data in mavigation --}}
-                        
-        {{-- End navigation data --}}
-        {{-- Forms --}}
         
-        {{-- end Form --}}
       </div>
       <!-- page-body-wrapper ends -->
     </div>

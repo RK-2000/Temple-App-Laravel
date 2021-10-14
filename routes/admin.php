@@ -89,12 +89,16 @@ Route::prefix('admin')->group(function () {
         //Image Gallery
         Route::middleware(['check.permissions:7'])->group(function () {
             Route::get('/image-gallery', [App\Http\Controllers\Admin\ImageController::class, 'index'])->name('images_gallery');
+            Route::post('/image-gallery', [App\Http\Controllers\Admin\ImageController::class, 'addImages'])->name('add.images');
+            Route::get('/delete-image', [App\Http\Controllers\Admin\ImageController::class, 'deleteImages'])->name('delete.images');
         });
 
 
         //Video Gallery
         Route::middleware(['check.permissions:8'])->group(function () {
             Route::get('/video-gallery', [App\Http\Controllers\Admin\VideoController::class, 'index'])->name('videos_gallery');
+            Route::post('/video-gallery', [App\Http\Controllers\Admin\VideoController::class, 'addVideos'])->name('add.videos');
+
         });
 
 

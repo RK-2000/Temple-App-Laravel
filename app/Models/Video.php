@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Video extends Model
 {   
     protected $table = 'tbl_video';
+    public $timestamps = false;
     use HasFactory;
 }
